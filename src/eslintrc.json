@@ -1,0 +1,33 @@
+{
+  "extends": "airbnb",
+  'env': {
+    'es6': true,
+    'node': true
+  },
+  "strict": [2, "global"],
+  'parserOptions': {
+    'ecmaVersion': 6,
+    'sourceType': 'module'
+  },
+  "globals": {
+    "$": true,
+    "window": true,
+    'document': true,
+    "__dirname": true
+  },
+  "rules": {
+    'no-new-func': 1,
+    'func-names': 0,
+    'no-new': 0,
+    'no-param-reassign': [2, { "props": false }],
+    'yoda': [1, "never", {"exceptRange": true,"onlyEquality": true}],
+    "no-useless-concat": 0,
+    "no-implicit-coercion": [2, {
+      "boolean": true,
+      "number": true,
+      "string": true,
+      "allow": [/* "!!", "~", "*", "+" */]
+    }],
+    "semi": [2, "never"]
+  }
+}
