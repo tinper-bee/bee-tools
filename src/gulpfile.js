@@ -145,7 +145,7 @@ gulp.task('chrome', (done) => {
 });
 
 gulp.task('server', [
-    'less_demo'
+    'sass_demo'
 ], function() {
 
     var compiler = webpack(webpackCfg);
