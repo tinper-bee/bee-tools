@@ -5,7 +5,7 @@ var assign = require('object-assign');
 var webpackCfg = require('./webpack.dev.js');
 
 module.exports = function () {
-  var indexSpec = getFromCwd('tests/index.js');
+  var indexSpec = getFromCwd('test/*.test.js');
   var files = [
     require.resolve('console-polyfill/index.js'),
     require.resolve('es5-shim/es5-shim.js'),
@@ -24,10 +24,19 @@ module.exports = function () {
       },
     },
     frameworks: ['mocha'],
+
     files: files,
     preprocessors: preprocessors,
     webpack: assign(webpackCfg, {
-      externals: {},
+      externals: {
+        'jsdom': 'window',
+        'cheerio': 'window',
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': 'window'
+      },
+      webpackMiddleware: {
+      noInfo: true
+    },
     }),
     webpackServer: {
       noInfo: true, //please don't spam the console when running in karma!

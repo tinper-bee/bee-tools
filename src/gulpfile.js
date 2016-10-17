@@ -8,10 +8,11 @@ var colors = require('colors/safe');
 var util = require('./util');
 var path = require('path');
 var express = require('express');
-var livereload = require('connect-livereload');
-var lr = require('tiny-lr');
-var lrServer = lr();
-var serveStatic = require('./serveStatic');
+
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
+
+
 var shelljs = require('shelljs');
 var ip = require('ip');
 var portscanner = require('portscanner');
@@ -40,7 +41,15 @@ colors.setTheme({
     info: ['bold', 'green']
 });
 
-
+gulp.task('pack_demo', function(cb) {
+    webpack(require('./webpack.dev.js'), function (err, stats) {
+        // 重要 打包过程中的语法错误反映在stats中
+        console.log('webpack log:' + stats);
+        if(err) cb(err);
+        console.info('###### pack_demo done ######');
+        cb();
+    });
+});
 
 gulp.task('pack_build', function(cb) {
     console.log(colors.info('###### pack_build start ######'))
@@ -59,6 +68,13 @@ gulp.task('pack_build', function(cb) {
             console.log(colors.info('###### pack_build done ######'))
             cb();
         });
+});
+
+gulp.task('sass_component', function () {
+    gulp.src([path.join(process.cwd(), './src/**/*.scss')])
+        .pipe(sass())
+        .pipe(gulp.dest('./build'));
+        console.log('###### sass_component done ######');
 });
 
 gulp.task('sass_demo', function(cb) {
@@ -94,16 +110,14 @@ gulp.task('lint', function(cb) {
 });
 
 gulp.task('reload_by_js', ['pack_demo'], function () {
-    lrServer.changed({body: {files: ['.']}});
+    reload();
 });
 
-gulp.task('reload_by_component_css', ['less_component'], function () {
-    lrServer.changed({body: {files: ['.']}});
+
+gulp.task('reload_by_demo_css', ['sass_demo'], function () {
+    reload();
 });
 
-gulp.task('reload_by_demo_css', ['less_demo'], function () {
-    lrServer.changed({body: {files: ['.']}});
-});
 
 gulp.task('test', function(done) {
     var karmaBin = require.resolve('karma/bin/karma');
@@ -122,13 +136,6 @@ gulp.task('coverage', (done) => {
     util.runCmd('node', args, done);
 });
 
-// run your unit tests across many browsers and platforms on Sauce Labs
-gulp.task('saucelabs', (done) => {
-    var karmaBin = require.resolve('karma/bin/karma');
-    var karmaConfig = path.join(__dirname, './karma.saucelabs.conf.js');
-    var args = [karmaBin, 'start', karmaConfig];
-    util.runCmd('node', args, done);
-});
 
 gulp.task('browsers', (done) => {
     var karmaBin = require.resolve('karma/bin/karma');
@@ -145,69 +152,89 @@ gulp.task('chrome', (done) => {
 });
 
 gulp.task('server', [
+    'pack_demo',
     'sass_demo'
 ], function() {
-
-    var compiler = webpack(webpackCfg);
-
-    var webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
-        publicPath: '/dist',
-        aggregateTimeout: 300, // wait so long for more changes
-        poll: true, // use polling instead of native watchers
-        stats: {
-            chunks: false
-        }
-    });
-    var app = express();
-    app.use(function(req, res, next) {
-        // 支持 CORS 跨域
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        next();
-    });
-    app.use(webpackDevMiddlewareInstance);
-
-    app.use(livereload({
-        port: 35729
-    }));
-    app.use(serveStatic('.'));
-
-    compiler.plugin('done', function(stats) {
-        console.log(colors.info('###### pack_demo done ######'));
-        lrServer.changed({body: {files: ['.']}});
-    })
-
-    webpackDevMiddlewareInstance.waitUntilValid(function(){
-      console.log(colors.info('Package is in a valid state'));
-      open(url)
+    browserSync({
+        server: {
+            baseDir: path.join(process.cwd(), './'),
+            port: 3000
+        },
+        open: 'external'
     });
 
-    // 开启 livereload
+    gulp.watch([path.join(process.cwd(), './src/**/*.js'), path.join(process.cwd(),'./demo/**/*.js')], ['reload_by_js']);
 
-    lrServer.listen(35729, function() {
-        console.log(colors.info('livereload server start: listening on 35729'));
-    });
+    gulp.watch(path.join(process.cwd(),'src/**/*.scss'), ['reload_by_demo_css']);
 
-    // 开启调试服务
-    portscanner.findAPortNotInUse(3000, 3010, ip.address(), function(error, port) {
-        url = "http://" + ip.address() + ":" + port;
-        var server = app.listen(port, function(err) {
-            console.log(colors.info("dev server start: listening at " + url));
-            if (err) {
-                console.error(err);
-            }
-        });
-        ;
-    })
-
-    gulp.watch(path.join(process.cwd(), './src/**/*.less'), ['reload_by_demo_css']);
-
-    gulp.watch(path.join(process.cwd(), './demo/**/*.less'), ['reload_by_demo_css']);
+    gulp.watch(path.join(process.cwd(),'demo/**/*.scss'), ['reload_by_demo_css']);
 
 });
 
-gulp.task('build', ['pack_build'], function() {});
+// gulp.task('server', [
+//     'sass_demo'
+// ], function() {
+//
+//     var compiler = webpack(webpackCfg);
+//
+//     var webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
+//         publicPath: '/dist',
+//         aggregateTimeout: 300, // wait so long for more changes
+//         poll: true, // use polling instead of native watchers
+//         stats: {
+//             chunks: false
+//         }
+//     });
+//     var app = express();
+//     app.use(function(req, res, next) {
+//         // 支持 CORS 跨域
+//         res.setHeader('Access-Control-Allow-Origin', '*');
+//         next();
+//     });
+//     app.use(webpackDevMiddlewareInstance);
+//
+//     app.use(livereload({
+//         port: 35729
+//     }));
+//     app.use(serveStatic('.'));
+//
+//     compiler.plugin('done', function(stats) {
+//         console.log(colors.info('###### pack_demo done ######'));
+//         lrServer.changed({body: {files: ['.']}});
+//     })
+//
+//     webpackDevMiddlewareInstance.waitUntilValid(function(){
+//       console.log(colors.info('Package is in a valid state'));
+//       open(url)
+//     });
+//
+//     // 开启 livereload
+//
+//     lrServer.listen(35729, function() {
+//         console.log(colors.info('livereload server start: listening on 35729'));
+//     });
+//
+//     // 开启调试服务
+//     portscanner.findAPortNotInUse(3000, 3010, ip.address(), function(error, port) {
+//         url = "http://" + ip.address() + ":" + port;
+//         var server = app.listen(port, function(err) {
+//             console.log(colors.info("dev server start: listening at " + url));
+//             if (err) {
+//                 console.error(err);
+//             }
+//         });
+//         ;
+//     })
+//
+//     gulp.watch(path.join(process.cwd(), './src/**/*.less'), ['reload_by_demo_css']);
+//
+//     gulp.watch(path.join(process.cwd(), './demo/**/*.less'), ['reload_by_demo_css']);
+//
+// });
 
-gulp.task('start', ['server']);
+gulp.task('build', ['pack_build', 'sass_component'], function() {});
+
+gulp.task('dev', ['server']);
 
 gulp.task('dep', function() {
     var commands = util.getPackages();
@@ -223,19 +250,7 @@ gulp.task('update', function() {
     });
 });
 
-gulp.task('tnpm-dep', function() {
-    var commands = util.getPackages();
-    commands.forEach(function(item) {
-        util.runCmd('tnpm', ['i', '-d', item]);
-    });
-});
 
-gulp.task('tnpm-update', function() {
-    var commands = util.getPackages();
-    commands.forEach(function(item) {
-        util.runCmd('tnpm', ['update', '-d', item]);
-    });
-});
 
 gulp.task('pub', ['pack_build'], function() {
     util.getQuestions().then(function(questions) {

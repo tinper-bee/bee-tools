@@ -54,7 +54,7 @@ module.exports = {
                     }),
                     cacheDirectory: true
                 }
-            }, 
+            },
             {
                 test: /\.svg$/,
                 loader: 'svg2react',
