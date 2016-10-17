@@ -10,11 +10,7 @@ var path = require('path');
 
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
-
 var shelljs = require('shelljs');
-//var ip = require('ip');
-//var portscanner = require('portscanner');
-//var open = require('open');
 
 // gulp & gulp plugin
 var gulp = require('gulp');
@@ -29,11 +25,8 @@ var eslint = require('gulp-eslint');
 
 // webpack
 var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackCfg = require('./webpack.dev.js');
-var MemoryFS = require("memory-fs");
 
-var url = "";
 
 colors.setTheme({
     info: ['bold', 'green']
@@ -171,70 +164,10 @@ gulp.task('server', [
 
 });
 
-// gulp.task('server', [
-//     'sass_demo'
-// ], function() {
-//
-//     var compiler = webpack(webpackCfg);
-//
-//     var webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
-//         publicPath: '/dist',
-//         aggregateTimeout: 300, // wait so long for more changes
-//         poll: true, // use polling instead of native watchers
-//         stats: {
-//             chunks: false
-//         }
-//     });
-//     var app = express();
-//     app.use(function(req, res, next) {
-//         // 支持 CORS 跨域
-//         res.setHeader('Access-Control-Allow-Origin', '*');
-//         next();
-//     });
-//     app.use(webpackDevMiddlewareInstance);
-//
-//     app.use(livereload({
-//         port: 35729
-//     }));
-//     app.use(serveStatic('.'));
-//
-//     compiler.plugin('done', function(stats) {
-//         console.log(colors.info('###### pack_demo done ######'));
-//         lrServer.changed({body: {files: ['.']}});
-//     })
-//
-//     webpackDevMiddlewareInstance.waitUntilValid(function(){
-//       console.log(colors.info('Package is in a valid state'));
-//       open(url)
-//     });
-//
-//     // 开启 livereload
-//
-//     lrServer.listen(35729, function() {
-//         console.log(colors.info('livereload server start: listening on 35729'));
-//     });
-//
-//     // 开启调试服务
-//     portscanner.findAPortNotInUse(3000, 3010, ip.address(), function(error, port) {
-//         url = "http://" + ip.address() + ":" + port;
-//         var server = app.listen(port, function(err) {
-//             console.log(colors.info("dev server start: listening at " + url));
-//             if (err) {
-//                 console.error(err);
-//             }
-//         });
-//         ;
-//     })
-//
-//     gulp.watch(path.join(process.cwd(), './src/**/*.less'), ['reload_by_demo_css']);
-//
-//     gulp.watch(path.join(process.cwd(), './demo/**/*.less'), ['reload_by_demo_css']);
-//
-// });
 
 gulp.task('build', ['pack_build', 'sass_component'], function() {});
 
-gulp.task('dev', ['server']);
+gulp.task('start', ['server']);
 
 gulp.task('dep', function() {
     var commands = util.getPackages();

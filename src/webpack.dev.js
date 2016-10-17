@@ -2,7 +2,7 @@ var fs = require('fs');
 var webpack = require('webpack');
 var path = require('path');
 var happypack = require('happypack');
-var ProgressBarPlugin = require('progress-bar-webpack-plugin');
+
 
 function getLoaderExclude(path) {
     var isNpmModule = !!path.match(/node_modules/);
@@ -72,7 +72,7 @@ module.exports = {
         root: [
             path.join(process.cwd(), './node_modules')
         ],
-        extensions: ['', '.web.ts', '.web.tsx', '.web.js', '.web.jsx', '.ts', '.tsx', '.js', '.jsx'],
+        extensions: ['', '.js', '.jsx'],
     },
     resolveLoader: {
         root: [
@@ -90,7 +90,7 @@ module.exports = {
         }),
         new happypack({
             id: 'js'
-        }),
-        // new ProgressBarPlugin()
+        })
+
     ]
 };
