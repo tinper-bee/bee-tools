@@ -39,6 +39,7 @@ colors.setTheme({
     info: ['bold', 'green']
 });
 
+
 gulp.task('pack_demo', function(cb) {
     webpack(require('./webpack.dev.js'), function (err, stats) {
         // 重要 打包过程中的语法错误反映在stats中
@@ -153,10 +154,11 @@ gulp.task('server', [
     'pack_demo',
     'sass_demo'
 ], function() {
+  var port = util.getPkg().config.port || 3000;
     browserSync({
         server: {
             baseDir: path.join(process.cwd(), './'),
-            port: 3000
+            port: port
         },
         open: 'external'
     });
