@@ -7,16 +7,14 @@ var file = require('html-wiring');
 var colors = require('colors/safe');
 var util = require('./util');
 var path = require('path');
-var express = require('express');
 
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-
 var shelljs = require('shelljs');
-var ip = require('ip');
-var portscanner = require('portscanner');
-var open = require('open');
+//var ip = require('ip');
+//var portscanner = require('portscanner');
+//var open = require('open');
 
 // gulp & gulp plugin
 var gulp = require('gulp');
