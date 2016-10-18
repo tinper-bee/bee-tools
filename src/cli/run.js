@@ -1,11 +1,7 @@
 #!/usr/bin/env node
-
 'use strict';
-
 var program = require('commander');
 var colors = require('colors/safe');
-
-
 colors.setTheme({
     info: ['bold', 'green'],
     list: ['bold', 'blue']

@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-
 'use strict';
-
 var program = require('commander');
 var packageInfo = require('../../package.json');
 
@@ -24,4 +22,3 @@ var subCmd = program.args[0];
 if (!subCmd || subCmd !== 'run') {
     program.help();
 }
-
