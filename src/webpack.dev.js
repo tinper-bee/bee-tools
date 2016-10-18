@@ -1,7 +1,6 @@
 var fs = require('fs');
 var webpack = require('webpack');
 var path = require('path');
-var happypack = require('happypack');
 
 
 function getLoaderExclude(path) {
@@ -41,32 +40,10 @@ module.exports = {
                         return require.resolve('babel-plugin-' + item);
                     }),
                     cacheDirectory: true
-                },
-                happy: {id: 'js'}
-            },
-            {
-                test: /\.svg$/,
-                loader: 'babel',
-                include: [path.join(process.cwd(), './src')],
-                query: {
-                    presets: ['react', 'es2015-ie'].map(function(item) {
-                        return require.resolve('babel-preset-' + item);
-                    }),
-                    cacheDirectory: true
                 }
-            },
-            {
-                test: /\.svg$/,
-                loader: 'svg2react',
-                include: [path.join(process.cwd(), './src')]
             }
-        ],
-        postLoaders: [
-            {
-                test: /\.js(x)*$/,
-                loader: 'es3ify',
-            }
-        ],
+
+        ]
     },
     resolve: {
         root: [
@@ -87,10 +64,6 @@ module.exports = {
         // SourceMap plugin will define process.env.NODE_ENV as development
         new webpack.SourceMapDevToolPlugin({
             columns: false
-        }),
-        new happypack({
-            id: 'js'
         })
-
     ]
 };
