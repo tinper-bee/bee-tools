@@ -20,3 +20,11 @@ bee-tools run browsers 跑浏览器测试
 bee-tools run dep 下载依赖
 bee-tools run update 更新依赖
 bee-tools run pub 发布npm包
+
+如果mac使用bee-tools提示`env: node\r: No such file or directory`
+请下载dos2unix
+```
+$brew install dos2unix
+$cd /usr/local/lib/node_modules/bee-tools/bin
+$sudo dos2unix bee-tools-run.js bee-tools.js
+```
