@@ -1,6 +1,6 @@
 {
   "name": "bee-tools",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "development tools for tinper-bee",
   "main": "index.js",
   "scripts": {},

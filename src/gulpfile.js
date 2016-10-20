@@ -43,8 +43,9 @@ gulp.task('pack_demo', function(cb) {
     });
 });
 
-gulp.task('pack_build', function(cb) {
-    console.log(colors.info('###### pack_build start ######'))
+gulp.task('pack_build', ['clean_build'], function(cb) {
+    console.log(colors.info('###### pack_build start ######'));
+    var pkg = util.getPkg();
     gulp.src([path.join(process.cwd(), './src/**/*.js'), path.join(process.cwd(), './src/**/*.jsx')])
         .pipe(babel({
             presets: ['react', 'es2015-ie', 'stage-1'].map(function(item) {
@@ -55,6 +56,7 @@ gulp.task('pack_build', function(cb) {
             })
         }))
         .pipe(es3ify())
+        .pipe(concat(pkg.name + '.js'))
         .pipe(gulp.dest('build'))
         .on('end', function() {
             console.log(colors.info('###### pack_build done ######'))
@@ -88,6 +90,10 @@ gulp.task('sass_demo', function(cb) {
             console.info(colors.info('###### sass_demo done ######'));
             cb();
         });
+});
+
+gulp.task('clean_build', function () {
+    return shelljs.rm('-rf', util.getFromCwd('build'));
 });
 
 gulp.task('lint', function(cb) {
