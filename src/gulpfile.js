@@ -56,7 +56,6 @@ gulp.task('pack_build', ['clean_build'], function(cb) {
             })
         }))
         .pipe(es3ify())
-        .pipe(concat(pkg.name + '.js'))
         .pipe(gulp.dest('build'))
         .on('end', function() {
             console.log(colors.info('###### pack_build done ######'))
