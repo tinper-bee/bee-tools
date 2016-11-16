@@ -25,7 +25,6 @@ var eslint = require('gulp-eslint');
 
 // webpack
 var webpack = require('webpack');
-var webpackCfg = require('./webpack.dev.js');
 
 
 colors.setTheme({

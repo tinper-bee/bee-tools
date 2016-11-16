@@ -60,6 +60,7 @@ module.exports = {
         react: 'var React', // 相当于把全局的React作为模块的返回 module.exports = React;
         'react-dom': 'var ReactDOM'
     },
+    devtool: 'source-map',
     plugins: [
         // SourceMap plugin will define process.env.NODE_ENV as development
         new webpack.SourceMapDevToolPlugin({
