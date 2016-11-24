@@ -1,0 +1,49 @@
+{
+  "name": "<%= packageName%>",
+  "version": "<%= version%>",
+  "description": "<%= appname%> ui component for react",
+  "keywords": [
+    "react",
+    "react-component",
+    "<%= packageName%>",
+    "iuap-design",
+    "tinper-bee",
+    "<%= appname%>"
+  ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "homepage": "<%= repo_url%>",
+  "author": "<%= author%>",
+    "repository": "http://github.com/tinper-bee/<%= packageName%>",
+    "bugs": "<%= repo_url%>/issues",
+    "license": "MIT",
+
+    "main":"./build/index.js",
+    "config":{
+    "port": <%= port%>
+    },
+    "scripts": {
+    "dev": "bee-tools run start",
+    "build": "bee-tools run build",
+    "lint": "bee-tools run lint",
+    "test": "bee-tools run test",
+    "chrome": "bee-tools run chrome",
+    "coveralls": "bee-tools run coverage",
+    "browsers": "bee-tools run browsers",
+    "pub": "bee-tools run pub"
+    },
+    "dependencies": {
+      "classnames": "^2.2.5",
+      "tinper-bee-core": "latest"
+    },
+    "devDependencies": {
+      "chai": "^3.5.0",
+      "enzyme": "^2.4.1",
+      "react": "~0.14.0",
+      "react-addons-test-utils": "15.3.2",
+      "react-dom": "~0.14.0",
+      "console-polyfill": "~0.2.1",
+      "es5-shim": "~4.1.10"
+    }
+}

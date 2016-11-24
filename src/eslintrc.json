@@ -7,7 +7,10 @@
   "strict": [2, "global"],
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeature": {
+        "experimentalObjectRestSpread": true
+    }
   },
   "globals": {
     "$": true,
@@ -27,7 +30,6 @@
       "number": true,
       "string": true,
       "allow": [ "!!", "~", "*", "+" ]
-    }],
-    "semi": [2, "never"]
+    }]
   }
 }

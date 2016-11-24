@@ -25,7 +25,7 @@ module.exports = {
 
                 test: /\.js(x)*$/,
                 // npm modules 都不需要经过babel解析
-                // exclude: getLoaderExclude,
+                exclude: getLoaderExclude,
                 include: [path.join(process.cwd(), './src'), path.join(process.cwd(), './demo'), path.join(process.cwd(), './test')],
                 loader: 'babel-loader',
                 query: {
@@ -35,7 +35,8 @@ module.exports = {
                     plugins: [
                         'transform-es3-member-expression-literals',
                         'transform-es3-property-literals',
-                        'add-module-exports'
+                        'add-module-exports',
+                        'transform-object-rest-spread'
                     ].map(function(item) {
                         return require.resolve('babel-plugin-' + item);
                     }),
