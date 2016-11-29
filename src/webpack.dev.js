@@ -5,7 +5,6 @@ var path = require('path');
 
 function getLoaderExclude(path) {
     var isNpmModule = !!path.match(/node_modules/);
-    console.log(isNpmModule);
     return isNpmModule;
 }
 
