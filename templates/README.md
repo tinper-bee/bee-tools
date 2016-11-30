@@ -5,6 +5,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/tinper-bee/<%= packageName%>/badge.svg?branch=master)](https://coveralls.io/github/tinper-bee/<%= packageName%>?branch=master)
 [![devDependency Status](https://img.shields.io/david/dev/tinper-bee/<%= packageName%>.svg)](https://david-dm.org/tinper-bee/<%= packageName%>#info=devDependencies)
 [![NPM downloads](http://img.shields.io/npm/dm/<%= packageName%>.svg?style=flat)](https://npmjs.org/package/<%= packageName%>)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/tinper-bee/<%= packageName%>.svg)](http://isitmaintained.com/project/tinper-bee/<%= packageName%> "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/tinper-bee/<%= packageName%>e.svg)](http://isitmaintained.com/project/tinper-bee/<%= packageName%> "Percentage of issues still open")
 
 ## Browser Support
 
