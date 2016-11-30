@@ -4,8 +4,9 @@
 [![Build Status](https://img.shields.io/travis/tinper-bee/bee-dropdown/master.svg)](https://travis-ci.org/tinper-bee/bee-dropdown)
 [![Coverage Status](https://coveralls.io/repos/github/tinper-bee/bee-dropdown/badge.svg?branch=master)](https://coveralls.io/github/tinper-bee/bee-dropdown?branch=master)
 [![devDependency Status](https://img.shields.io/david/dev/tinper-bee/bee-dropdown.svg)](https://david-dm.org/tinper-bee/bee-dropdown#info=devDependencies)
-[![NPM downloads](http://img.shields.io/npm/dm/bee-dropdown.svg?style=flat)](https://npmjs.org/package/bee-dropdown)
-
+[![NPM downloads](http://img.shields.io/npm/dm/<%= packageName%>.svg?style=flat)](https://npmjs.org/package/<%= packageName%>)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/tinper-bee/<%= packageName%>.svg)](http://isitmaintained.com/project/tinper-bee/<%= packageName%> "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/tinper-bee/<%= packageName%>.svg)](http://isitmaintained.com/project/tinper-bee/<%= packageName%> "Percentage of issues still open")
 
 ## Browser Support
 

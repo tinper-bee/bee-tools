@@ -1,4 +1,9 @@
 # bee-tools
+
+[![NPM downloads](http://img.shields.io/npm/dm/bee-tools.svg?style=flat)](https://npmjs.org/package/bee-tools)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/tinper-bee/bee-tools.svg)](http://isitmaintained.com/project/tinper-bee/bee-tools "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/tinper-bee/bee-tools.svg)](http://isitmaintained.com/project/tinper-bee/bee-tools "Percentage of issues still open")
+
 tinper-bee 组件库编写组件开发工具
 
 ## 下载
