@@ -13,9 +13,7 @@ module.exports = function(config) {
         new webpack.SourceMapDevToolPlugin({
             columns: false
         }),
-        new happypack({
-            id: 'js'
-        }),
+
     ];
     config.set(assign(commonConfig, {
         browsers: browsers

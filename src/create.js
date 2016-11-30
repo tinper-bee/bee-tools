@@ -101,7 +101,7 @@ var mapFileContent = [
         content: demoIndexJs
     },
     {
-        file: path.resolve(name, 'test', AppName + '.test.js'),
+        file: path.resolve(name, 'test','index.test.js'),
         content: testComponentjs
     }
 ]
