@@ -35,7 +35,7 @@ var srcComponentContent = [
 "const defaultProps = {};",
 "class " + AppName + " extends Component {render(){return(<h2>Welcome use tinper-bee</h2> )}};",
 AppName + ".propTypes = propTypes;",
-AppName + ".defaultProp = defaultProps;",
+AppName + ".defaultProps = defaultProps;",
 "export default " + AppName + ";"
 ].join('\n');
 
