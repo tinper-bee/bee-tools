@@ -7,7 +7,7 @@ module.exports = function (name, options) {
 var author = options.author || 'Yonyou FED',
     pkgName = options.pkgName || name,
     version = options.tbVersion || '0.0.1',
-    repoUrl = options.repoUrl || 'https://github.com/tinper-bee' + name + '.git',
+    repoUrl = options.repoUrl || 'https://github.com/tinper-bee/' + name + '.git',
     port = options.port || 3000;
 
 
