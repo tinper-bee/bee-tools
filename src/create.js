@@ -21,6 +21,7 @@ var author = options.author || 'Yonyou FED',
     //创建基本目录
 fse.mkdirsSync(path.resolve(name, 'src'));
 fse.mkdirsSync(path.resolve(name, 'demo'));
+fse.mkdirsSync(path.resolve(name, 'demo/demolist'));
 fse.mkdirsSync(path.resolve(name, 'test'));
 var templateDir = path.resolve(__dirname, '../templates');
 
@@ -35,7 +36,7 @@ var srcComponentContent = [
 "const defaultProps = {};",
 "class " + AppName + " extends Component {render(){return(<h2>Welcome use tinper-bee</h2> )}};",
 AppName + ".propTypes = propTypes;",
-AppName + ".defaultProp = defaultProps;",
+AppName + ".defaultProps = defaultProps;",
 "export default " + AppName + ";"
 ].join('\n');
 
@@ -96,10 +97,10 @@ var mapFileContent = [
         file: path.resolve(name, 'demo', AppName + 'Demo.js'),
         content: demojs
     },
-    {
-        file: path.resolve(name, 'demo', 'index.js'),
-        content: demoIndexJs
-    },
+    //{
+    //    file: path.resolve(name, 'demo', 'index.js'),
+    //    content: demoIndexJs
+    //},
     {
         file: path.resolve(name, 'test','index.test.js'),
         content: testComponentjs
@@ -156,6 +157,7 @@ replaceVariate('package.json', [
     { old: '<%= author%>', new: author},
     { old: '<%= repo_url%>', new: repoUrl}
 ]);
+replaceVariate('./demo/index-demo-base.js', [{ old: '<%= appname%>', new: AppName}]);
 
 function camelCase(name) {
   return name.replace(/-\w/g, function (m) {
