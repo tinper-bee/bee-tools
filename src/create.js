@@ -96,10 +96,10 @@ var mapFileContent = [
         file: path.resolve(name, 'demo', AppName + 'Demo.js'),
         content: demojs
     },
-    {
-        file: path.resolve(name, 'demo', 'index.js'),
-        content: demoIndexJs
-    },
+    //{
+    //    file: path.resolve(name, 'demo', 'index.js'),
+    //    content: demoIndexJs
+    //},
     {
         file: path.resolve(name, 'test','index.test.js'),
         content: testComponentjs
@@ -156,6 +156,7 @@ replaceVariate('package.json', [
     { old: '<%= author%>', new: author},
     { old: '<%= repo_url%>', new: repoUrl}
 ]);
+replaceVariate('./demo/index-demo-base.js', [{ old: '<%= appname%>', new: AppName}]);
 
 function camelCase(name) {
   return name.replace(/-\w/g, function (m) {

@@ -32,14 +32,73 @@ colors.setTheme({
 });
 
 
-gulp.task('pack_demo', function(cb) {
-    webpack(require('./webpack.dev.js'), function (err, stats) {
-        // 重要 打包过程中的语法错误反映在stats中
-        console.log('webpack log:' + stats);
-        if(err) cb(err);
-        console.info('###### pack_demo done ######');
-        cb();
-    });
+gulp.task('pack_demo',function(cb) {
+    var p = path.join(process.cwd(),'./demo/demolist');
+
+    function explorer(paths){
+        var arr = [],code=[];
+        fs.readdir(paths, function(err,files){
+
+            if(err){
+                console.log("error:\n"+err);
+                return;
+            }
+
+            files.forEach(function(file) {
+                var fileName = file.replace('.js','');
+                fs.stat(paths + "//" + file, function (err, stat) {
+                    //console.log(stat);
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    if (stat.isDirectory()) {
+                        //console.log(paths + "\/" + file + "\/");
+                        explorer(path + "\/" + file);
+                    } else {
+                       // console.log(paths + "\/" + file);
+                    }
+
+                });
+                var data = fs.readFileSync(paths + "//" + file,'utf-8');
+
+                var title = data.match(/@title.{0,20}/)||[];
+                title = title.join('').replace(/@title/,'');
+
+                console.log(title);
+
+                arr.push({
+                    example: '<'+fileName+' />',
+                    title: title||fileName,
+                    code: data
+                });
+                code.push(data);
+            });
+            var index = fs.readFileSync(path.join(process.cwd(),'./demo/index-demo-base.js'),'utf-8');
+
+
+            var str = 'var DemoArray = '+JSON.stringify(arr) +'\n';
+
+
+            str = str.replace(/ple":"</ig,'ple":<').replace(/","tit/ig,',"tit');
+
+            index = index.replace(/\{demolist\}/,code.join('')+str);
+
+
+            fs.writeFile(path.join(process.cwd(),'./demo/index.js'), index, function (err) {
+                if (err) throw err;
+                console.log('demo/index.js It\'s saved!');
+                webpack(require('./webpack.dev.js'), function (err, stats) {
+                    // 重要 打包过程中的语法错误反映在stats中
+                    console.log('webpack log:' + stats);
+                    if(err) cb(err);
+                    console.info('###### pack_demo done ######');
+                    cb();
+                });
+            });
+        });
+    };
+    explorer(p);
 });
 
 gulp.task('pack_build', ['clean_build'], function(cb) {
@@ -165,6 +224,8 @@ gulp.task('server', [
     gulp.watch(path.join(process.cwd(),'src/**/*.scss'), ['reload_by_demo_css']);
 
     gulp.watch(path.join(process.cwd(),'demo/**/*.scss'), ['reload_by_demo_css']);
+
+    gulp.watch(path.join(process.cwd(),'./demo/demolist/*.js'),['pack_demo']);
 
 });
 
