@@ -21,6 +21,7 @@ var author = options.author || 'Yonyou FED',
     //创建基本目录
 fse.mkdirsSync(path.resolve(name, 'src'));
 fse.mkdirsSync(path.resolve(name, 'demo'));
+fse.mkdirsSync(path.resolve(name, 'demo/demolist'));
 fse.mkdirsSync(path.resolve(name, 'test'));
 var templateDir = path.resolve(__dirname, '../templates');
 
