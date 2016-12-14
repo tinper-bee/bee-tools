@@ -61,12 +61,21 @@ gulp.task('pack_demo',function(cb) {
 
                 });
                 var data = fs.readFileSync(paths + "//" + file,'utf-8');
+                var title,desc;
+                try{
+                    title = data.match(/@title.{0,20}/)||[];
+                    title = title.join('').replace(/@title/,'');
+                }catch(e){
+                    console.log('please write title like @title');
+                }
 
-                var title = data.match(/@title.{0,20}/)||[];
-                title = title.join('').replace(/@title/,'');
+                try{
+                    desc = data.match(/@description.{0,30}/)||[];
+                    desc = desc.join('').replace(/@description/,'');
+                }catch(e){
+                    console.log('please write description like @description');
+                }
 
-                var desc = desc.match(/@description.{0,30}/)||[];
-                desc = desc.join('').replace(/@description/,'');
 
 
 
@@ -74,7 +83,7 @@ gulp.task('pack_demo',function(cb) {
                     example: '<'+fileName+' />',
                     title: title||fileName,
                     code: data,
-                    description:desc
+                    desc: desc
                 });
                 code.push(data);
             });
