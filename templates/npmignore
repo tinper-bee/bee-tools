@@ -25,5 +25,4 @@ _site
 sea-modules
 spm_modules
 .cache
-dist
 coverage
