@@ -65,12 +65,16 @@ gulp.task('pack_demo',function(cb) {
                 var title = data.match(/@title.{0,20}/)||[];
                 title = title.join('').replace(/@title/,'');
 
-                console.log(title);
+                var desc = desc.match(/@description.{0,30}/)||[];
+                desc = desc.join('').replace(/@description/,'');
+
+
 
                 arr.push({
                     example: '<'+fileName+' />',
                     title: title||fileName,
-                    code: data
+                    code: data,
+                    description:desc
                 });
                 code.push(data);
             });
