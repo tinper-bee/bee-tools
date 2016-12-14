@@ -37,7 +37,7 @@ class Demo extends Component {
             </Button>
         )
         return (
-            <Col md={12}>
+            <Col md={8}>
                 <h3>{ title }</h3>
                 <Panel collapsible expanded={ this.state.open } colors='bordered' header={ example } footer={footer} footerStyle = {{padding: 0}}>
                     <pre><code className="hljs javascript">{ code }</code></pre>
@@ -53,7 +53,6 @@ class DemoGroup extends Component {
     }
     render () {
         return (
-            <Con>
                 <Row>
                     {DemoArray.map((child,index) => {
 
@@ -63,7 +62,6 @@ class DemoGroup extends Component {
 
                     })}
                 </Row>
-            </Con>
         )
     }
 }

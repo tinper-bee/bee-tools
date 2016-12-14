@@ -23,6 +23,7 @@ fse.mkdirsSync(path.resolve(name, 'src'));
 fse.mkdirsSync(path.resolve(name, 'demo'));
 fse.mkdirsSync(path.resolve(name, 'demo/demolist'));
 fse.mkdirsSync(path.resolve(name, 'test'));
+fse.mkdirsSync(path.resolve(name, 'docs'));
 var templateDir = path.resolve(__dirname, '../templates');
 
 fse.copySync(templateDir, name);
@@ -52,7 +53,9 @@ var srcComponentScss = [
 
 var demoScss = [
   '@import "../node_modules/tinper-bee-core/scss/index.scss";',
-  '@import "../src/' + AppName + '.scss";'
+  '@import "../src/' + AppName + '.scss";',
+  '@import "../node_modules/bee-panel/src/Panel.scss";',
+  '@import "../node_modules/bee-layout/src/Layout.scss";'
 ].join('\n');
 
 var demojs = [
@@ -74,6 +77,12 @@ var testComponentjs = [
   "import {shallow, mount, render} from 'enzyme';",
   "import {expect} from 'chai';",
   "import " + AppName + " from '../src/index';"
+].join('\n');
+
+var docsContent = [
+    "### API",
+    "|参数|说明|类型|默认值|",
+    "|:---|:----:|:---:|------:|"
 ].join('\n');
 
 var mapFileContent = [
@@ -104,6 +113,10 @@ var mapFileContent = [
     {
         file: path.resolve(name, 'test','index.test.js'),
         content: testComponentjs
+    },
+    {
+        file: path.resolve(name, 'docs','api.md'),
+        content: docsContent
     }
 ]
 
