@@ -55,7 +55,8 @@ var demoScss = [
   '@import "../node_modules/tinper-bee-core/scss/index.scss";',
   '@import "../src/' + AppName + '.scss";',
   '@import "../node_modules/bee-panel/src/Panel.scss";',
-  '@import "../node_modules/bee-layout/src/Layout.scss";'
+  '@import "../node_modules/bee-layout/src/Layout.scss";',
+  '@import "../node_modules/bee-button/src/Button.scss";'
 ].join('\n');
 
 var demojs = [
@@ -80,11 +81,37 @@ var testComponentjs = [
 ].join('\n');
 
 var docsContent = [
-    "# "+name,
+    "# "+AppName,
     "## 代码演示",
     "## API",
     "|参数|说明|类型|默认值|",
     "|:---|:----:|:---:|------:|"
+].join('\n');
+
+var docsContentEn = [
+    "## " + AppName,
+    "## Code display",
+    "## API",
+    "|Property|Description|Type|Default|",
+    "|:---|:----:|:---:|------:|"
+].join('\n');
+
+var demo1 = [
+    "/**",
+     "*",
+     "* @title 这是标题",
+     "* @description 这是描述",
+     "*",
+     "*/",
+    "class Demo1 extends Component {",
+    "render () {",
+    "return (",
+    "<div>",
+    "欢迎使用老赵DEMO系统",
+    "</div>",
+    ")",
+    "}",
+    "}"
 ].join('\n');
 
 var mapFileContent = [
@@ -119,6 +146,14 @@ var mapFileContent = [
     {
         file: path.resolve(name, 'docs','api.md'),
         content: docsContent
+    },
+    {
+        file: path.resolve(name, 'docs','api_en.md'),
+        content: docsContentEn
+    },
+    {
+        file: path.resolve(name, 'demo','demolist','Demo1.js'),
+        content: demo1
     }
 ]
 
