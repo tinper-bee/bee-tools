@@ -56,7 +56,8 @@ var demoScss = [
   '@import "../src/' + AppName + '.scss";',
   '@import "../node_modules/bee-panel/src/Panel.scss";',
   '@import "../node_modules/bee-layout/src/Layout.scss";',
-  '@import "../node_modules/bee-button/src/Button.scss";'
+  '@import "../node_modules/bee-button/src/Button.scss";',
+  '@import "../node_modules/bee-transition/src/Transition.scss";'
 ].join('\n');
 
 var demojs = [
