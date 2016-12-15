@@ -82,15 +82,17 @@ var testComponentjs = [
 ].join('\n');
 
 var docsContent = [
-    "## " + AppName,
-    "### API",
+    "# "+AppName,
+    "## 代码演示",
+    "## API",
     "|参数|说明|类型|默认值|",
     "|:---|:----:|:---:|------:|"
 ].join('\n');
 
 var docsContentEn = [
     "## " + AppName,
-    "### API",
+    "## Code display",
+    "## API",
     "|Property|Description|Type|Default|",
     "|:---|:----:|:---:|------:|"
 ].join('\n');

@@ -70,7 +70,7 @@ gulp.task('pack_demo',function(cb) {
                 }
 
                 try{
-                    desc = data.match(/@description.{0,30}/)||[];
+                    desc = data.match(/@description.{0,150}/)||[];
                     desc = desc.join('').replace(/@description/,'');
                 }catch(e){
                     console.log('please write description like @description');
