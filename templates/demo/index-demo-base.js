@@ -50,7 +50,7 @@ class Demo extends Component {
             </Row>
         );
         return (
-            <Col md={10} mdOffset={1} sm={12} smOffset={0}>
+            <Col md={12} >
                 <h3>{ title }</h3>
                 <p>{ desc }</p>
                 <Panel collapsible headerContent expanded={ this.state.open } colors='bordered' header={ header } footer={footer} footerStyle = {{padding: 0}}>

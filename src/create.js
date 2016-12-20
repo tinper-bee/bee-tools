@@ -94,7 +94,7 @@ var docsContentEn = [
     "## Code display",
     "## API",
     "|Property|Description|Type|Default|",
-    "|:---|:----:|:---:|------:|"
+    "|:---|:-----|:----|:------|"
 ].join('\n');
 
 var demo1 = [
