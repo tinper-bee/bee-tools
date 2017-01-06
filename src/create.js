@@ -29,7 +29,7 @@ var templateDir = path.resolve(__dirname, '../templates');
 fse.copySync(templateDir, name);
 
 var appname = name.replace(/\s/g, '-').split("-").splice(1).join('-');
-var AppName = appname.charAt(0).toUpperCase() + camelCase(appname.slice(1));;
+var AppName = appname.charAt(0).toUpperCase() + camelCase(appname.slice(1));
 
 var srcComponentContent = [
 "import React, { Component, PropTypes } from 'react';",
@@ -200,6 +200,7 @@ function replaceVariate (file, changeArray) {
     });
 }
 replaceVariate('README.md', [{ old: '<%= packageName%>', new: name}]);
+replaceVariate('README_EN.md', [{ old: '<%= packageName%>', new: name}]);
 replaceVariate('package.json', [
     { old: '<%= packageName%>', new: name},
     { old: '<%= version%>', new: version},

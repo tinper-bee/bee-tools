@@ -263,7 +263,7 @@ gulp.task('update', function() {
 
 
 
-gulp.task('pub', ['pack_build'], function() {
+gulp.task('pub', ['pack_build', 'sass_component'], function() {
     util.getQuestions().then(function(questions) {
         inquirer.prompt(questions).then(function(answers) {
             var pkg = util.getPkg();
