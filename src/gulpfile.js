@@ -45,7 +45,11 @@ gulp.task('pack_demo',function(cb) {
             }
 
             files.forEach(function(file) {
+                if(file.search(/Demo\d+.js/)==-1){
+                    return false;
+                }
                 var fileName = file.replace('.js','');
+
                 fs.stat(paths + "//" + file, function (err, stat) {
                     //console.log(stat);
                     if (err) {
