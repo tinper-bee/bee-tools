@@ -130,6 +130,7 @@ gulp.task('pack_build', ['clean_build'], function(cb) {
             'transform-runtime',
             'transform-object-assign',
             'add-module-exports',
+            'transform-object-entries',
             'transform-object-rest-spread'].map(function(item) {
                 return require.resolve('babel-plugin-' + item);
             })
