@@ -34,7 +34,6 @@ module.exports = {
                     plugins: [
                         'transform-es3-member-expression-literals',
                         'transform-es3-property-literals',
-                        'transform-runtime',
                         'transform-object-assign',
                         'transform-object-entries',
                         'add-module-exports',
