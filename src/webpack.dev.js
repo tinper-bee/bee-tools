@@ -28,12 +28,14 @@ module.exports = {
                 include: [path.join(process.cwd(), './src'), path.join(process.cwd(), './demo'), path.join(process.cwd(), './test')],
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react', 'es2015-ie', 'stage-1'].map(function(item) {
+                    presets: ['react', 'es2015-ie', 'stage-1', 'stage-3'].map(function(item) {
                         return require.resolve('babel-preset-' + item);
                     }),
                     plugins: [
                         'transform-es3-member-expression-literals',
                         'transform-es3-property-literals',
+                        'transform-runtime',
+                        'transform-object-assign',
                         'add-module-exports',
                         'transform-object-rest-spread'
                     ].map(function(item) {

@@ -123,10 +123,14 @@ gulp.task('pack_build', ['clean_build'], function(cb) {
     var pkg = util.getPkg();
     gulp.src([path.join(process.cwd(), './src/**/*.js'), path.join(process.cwd(), './src/**/*.jsx')])
         .pipe(babel({
-            presets: ['react', 'es2015-ie', 'stage-1'].map(function(item) {
+            presets: ['react', 'es2015-ie', 'stage-1', 'stage-3'].map(function(item) {
                 return require.resolve('babel-preset-' + item);
             }),
-            plugins: ['add-module-exports'].map(function(item) {
+            plugins: [
+            'transform-runtime',
+            'transform-object-assign',
+            'add-module-exports',
+            'transform-object-rest-spread'].map(function(item) {
                 return require.resolve('babel-plugin-' + item);
             })
         }))
