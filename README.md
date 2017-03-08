@@ -11,25 +11,39 @@ tinper-bee 组件库编写组件开发工具
 npm install -g bee-tools
 ```
 ## 使用
-直接进入项目根目录进行使用
 
-## API
+`cd` 直接进入项目根目录，使用以下命令完成对应功能。
 
-bee-tools run dev 打开浏览器，调试代码和demo
-bee-tools run build 打包代码到build文件夹
-bee-tools run lint 跑lint测试
-bee-tools run test 跑自动测试
-bee-tools run coverage 测试覆盖率
-bee-tools run chrome 跑chrome测试
-bee-tools run browsers 跑浏览器测试
-bee-tools run dep 下载依赖
-bee-tools run update 更新依赖
-bee-tools run pub 发布npm包
 
-如果mac使用bee-tools提示`env: node\r: No such file or directory`
-请下载dos2unix
+| # | Scripts 脚本命令 | Description 功能描述 |
+| --- | --- | --- |
+| 1 | bee-tools run dev | 打开浏览器，调试代码和demo |
+| 2 | bee-tools run build | 打包代码到build文件夹 |
+| 3 | bee-tools run lint | 跑lint测试 |
+| 4 | bee-tools run test | 跑自动测试 |
+| 5 | bee-tools run coverage | 测试覆盖率 |
+| 6 | bee-tools run chrome | 跑chrome测试 |
+| 7 | bee-tools run browsers | 跑浏览器测试 |
+| 8 | bee-tools run dep | 下载依赖 |
+| 9 | bee-tools run update | 更新依赖 |
+| 10 | bee-tools run pub | 发布npm包 |
+
+## 几个使用建议
+
+- `mac` 用户安装 `bee-tools` 后提示`env: node\r: No such file or directory`
+
+请下载dos2unix，具体操作如下：
 ```
 $brew install dos2unix
 $cd /usr/local/lib/node_modules/bee-tools/bin
 $sudo dos2unix bee-tools-run.js bee-tools.js
+```
+
+- 下载 `bee-tools` 速度较慢
+
+建议使用 `cnpm` 进行下载
+
+```
+sudo npm install cnpm -g
+cnpm install bee-tools -g
 ```
