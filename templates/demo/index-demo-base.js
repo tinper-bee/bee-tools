@@ -37,23 +37,11 @@ class Demo extends Component {
                 { text }
             </Button>
         );
-        const header = (
-            <Row>
-                <Col md={11}>
-                { example }
-                </Col>
-                <Col md={1}>
-                <Button shape="icon" onClick={ this.handleClick }>
-                    { caret }
-                </Button>
-                </Col>
-            </Row>
-        );
         return (
             <Col md={12} >
                 <h3>{ title }</h3>
                 <p>{ desc }</p>
-                <Panel collapsible headerContent expanded={ this.state.open } colors='bordered' header={ header } footer={footer} footerStyle = {{padding: 0}}>
+                <Panel collapsible headerContent expanded={ this.state.open } colors='bordered' header={ example } footer={footer} footerStyle = {{padding: 0}}>
                     <pre><code className="hljs javascript">{ code }</code></pre>
                 </Panel>
             </Col>

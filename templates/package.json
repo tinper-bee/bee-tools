@@ -26,11 +26,11 @@
     "scripts": {
     "dev": "bee-tools run start",
     "build": "bee-tools run build",
-    "lint": "bee-tools run lint",
-    "test": "bee-tools run test",
-    "chrome": "bee-tools run chrome",
-    "coveralls": "bee-tools run coverage",
-    "browsers": "bee-tools run browsers",
+    "lint": "bee-tools-test run lint",
+    "test": "bee-tools-test run test",
+    "chrome": "bee-tools-test run chrome",
+    "coveralls": "bee-tools-test run coverage",
+    "browsers": "bee-tools-test run browsers",
     "pub": "bee-tools run pub"
     },
     "dependencies": {
