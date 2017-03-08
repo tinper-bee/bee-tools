@@ -19,11 +19,6 @@ npm install -g bee-tools
 | --- | --- | --- |
 | 1 | bee-tools run dev | 打开浏览器，调试代码和demo |
 | 2 | bee-tools run build | 打包代码到build文件夹 |
-| 3 | bee-tools run lint | 跑lint测试 |
-| 4 | bee-tools run test | 跑自动测试 |
-| 5 | bee-tools run coverage | 测试覆盖率 |
-| 6 | bee-tools run chrome | 跑chrome测试 |
-| 7 | bee-tools run browsers | 跑浏览器测试 |
 | 8 | bee-tools run dep | 下载依赖 |
 | 9 | bee-tools run update | 更新依赖 |
 | 10 | bee-tools run pub | 发布npm包 |

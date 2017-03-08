@@ -1,7 +1,6 @@
 var file = require('html-wiring');
 var path = require('path');
 var pkg = JSON.parse(file.readFileAsString('package.json'));
-var eslintCfg = JSON.parse(file.readFileAsString(__dirname + '/eslintrc.json'));
 var Promise = require('promise');
 var git = require('git-rev');
 
@@ -40,9 +39,6 @@ var utils = {
     },
     getPkg: function() {
         return pkg;
-    },
-    getEslintCfg: function() {
-        return eslintCfg;
     },
     getPackages: function() {
         var commands = [];

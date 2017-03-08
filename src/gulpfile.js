@@ -174,16 +174,6 @@ gulp.task('clean_build', function () {
     return shelljs.rm('-rf', util.getFromCwd('build'));
 });
 
-gulp.task('lint', function(cb) {
-    var eslintCfg = util.getEslintCfg();
-    gulp.src([
-            path.join(process.cwd(), './src/**/*.js'),
-            path.join(process.cwd(), './demo/**/*.js')
-        ])
-        .pipe(eslint(eslintCfg))
-        .pipe(eslint.format('table'))
-        .pipe(eslint.failAfterError());
-});
 
 gulp.task('reload_by_js', ['pack_demo'], function () {
     reload();
@@ -192,39 +182,6 @@ gulp.task('reload_by_js', ['pack_demo'], function () {
 
 gulp.task('reload_by_demo_css', ['sass_demo'], function () {
     reload();
-});
-
-
-gulp.task('test', function(done) {
-    var karmaBin = require.resolve('karma/bin/karma');
-    var karmaConfig = path.join(__dirname, './karma.phantomjs.conf.js');
-    var args = [karmaBin, 'start', karmaConfig];
-    util.runCmd('node', args, done);
-});
-
-gulp.task('coverage', (done) => {
-    if (fs.existsSync(util.getFromCwd('coverage'))) {
-        shelljs.rm('-rf', util.getFromCwd('coverage'));
-    }
-    var karmaBin = require.resolve('karma/bin/karma');
-    var karmaConfig = path.join(__dirname, './karma.phantomjs.coverage.conf.js');
-    var args = [karmaBin, 'start', karmaConfig];
-    util.runCmd('node', args, done);
-});
-
-
-gulp.task('browsers', (done) => {
-    var karmaBin = require.resolve('karma/bin/karma');
-    var karmaConfig = path.join(__dirname, './karma.browsers.conf.js');
-    var args = [karmaBin, 'start', karmaConfig];
-    util.runCmd('node', args, done);
-});
-
-gulp.task('chrome', (done) => {
-    var karmaBin = require.resolve('karma/bin/karma');
-    var karmaConfig = path.join(__dirname, './karma.chrome.conf.js');
-    var args = [karmaBin, 'start', karmaConfig];
-    util.runCmd('node', args, done);
 });
 
 gulp.task('server', [
