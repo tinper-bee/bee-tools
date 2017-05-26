@@ -35,7 +35,8 @@
     },
     "dependencies": {
       "classnames": "^2.2.5",
-      "tinper-bee-core": "latest"
+      "tinper-bee-core": "latest",
+      "babel-runtime": "^6.23.0"
     },
     "devDependencies": {
       "chai": "^3.5.0",
