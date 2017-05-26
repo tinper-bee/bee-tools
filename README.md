@@ -23,22 +23,3 @@ npm install -g bee-tools
 | 4 | bee-tools run update | 更新依赖 |
 | 5 | bee-tools run pub | 发布npm包 |
 
-## 几个使用建议
-
-- `mac` 用户安装 `bee-tools` 后提示`env: node\r: No such file or directory`
-
-请下载dos2unix，具体操作如下：
-```
-$brew install dos2unix
-$cd /usr/local/lib/node_modules/bee-tools/bin
-$sudo dos2unix bee-tools-run.js bee-tools.js
-```
-
-- 下载 `bee-tools` 速度较慢
-
-建议使用 `cnpm` 进行下载
-
-```
-sudo npm install cnpm -g
-cnpm install bee-tools -g
-```
