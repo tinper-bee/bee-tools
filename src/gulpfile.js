@@ -80,6 +80,13 @@ gulp.task('pack_demo',function(cb) {
                     console.log('please write description like @description');
                 }
 
+                try{
+                    data = data.replace(/export.*/ig,'');
+                    data = data.replace(/'..\/..\/src'/ig,'\'tinper-bee\'');
+                }catch(e){
+
+                }
+
 
 
 
@@ -89,8 +96,11 @@ gulp.task('pack_demo',function(cb) {
                     code: data,
                     desc: desc
                 });
-                code.push(data);
+                // code.push(data);
+                code.push('var '+fileName+' = require("./demolist/'+fileName+'");');
             });
+
+
             var index = fs.readFileSync(path.join(process.cwd(),'./demo/index-demo-base.js'),'utf-8');
 
 
