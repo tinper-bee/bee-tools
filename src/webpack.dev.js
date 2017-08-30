@@ -19,32 +19,30 @@ module.exports = {
         sourceMapFilename: "[name].js.map"
     },
     module: {
-        rules: [
+        loaders: [
             {
 
                 test: /\.js(x)*$/,
                 // npm modules 都不需要经过babel解析
                 exclude: getLoaderExclude,
                 include: [path.join(process.cwd(), './src'), path.join(process.cwd(), './demo'), path.join(process.cwd(), './test')],
-                use: [{
-                    loader:'babel-loader',
-                    option: {
-                        presets: ['react', 'es2015-ie', 'stage-1'].map(function(item) {
-                            return require.resolve('babel-preset-' + item);
-                        }),
-                        plugins: [
-                            'transform-es3-member-expression-literals',
-                            'transform-es3-property-literals',
-                            'transform-object-assign',
-                            'transform-object-entries',
-                            'add-module-exports',
-                            'transform-object-rest-spread'
-                        ].map(function(item) {
-                            return require.resolve('babel-plugin-' + item);
-                        }),
-                        cacheDirectory: true
-                    }
-                }],
+                loader: 'babel-loader',
+                query: {
+                    presets: ['react', 'es2015-ie', 'stage-1'].map(function(item) {
+                        return require.resolve('babel-preset-' + item);
+                    }),
+                    plugins: [
+                        'transform-es3-member-expression-literals',
+                        'transform-es3-property-literals',
+                        'transform-object-assign',
+                        'transform-object-entries',
+                        'add-module-exports',
+                        'transform-object-rest-spread'
+                    ].map(function(item) {
+                        return require.resolve('babel-plugin-' + item);
+                    }),
+                    cacheDirectory: true
+                }
             }
 
         ]
@@ -53,7 +51,7 @@ module.exports = {
         root: [
             path.join(process.cwd(), './node_modules')
         ],
-        extensions: ['.js', '.jsx'],
+        extensions: ['', '.js', '.jsx'],
     },
     resolveLoader: {
         root: [
