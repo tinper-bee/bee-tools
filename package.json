@@ -1,6 +1,6 @@
 {
   "name": "bee-tools",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "development tools for tinper-bee",
   "main": "index.js",
   "scripts": {},
@@ -52,7 +52,7 @@
     "shelljs": "~0.7.0",
     "sorted-object": "^2.0.1",
     "svg2react-loader": "^1.0.3",
-    "webpack": "~1.x",
+    "webpack": "~2.x",
     "webpack-dev-middleware": "~1.6.1"
   }
 }
