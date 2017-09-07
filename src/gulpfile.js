@@ -81,8 +81,18 @@ gulp.task('pack_demo',function(cb) {
                 }
 
                 try{
-                    data = data.replace(/export.*/ig,'');
-                    data = data.replace(/'..\/..\/src'/ig,'\'tinper-bee\'');
+                    data = data.replace(/export(\s+)(.*)/ig,'');
+
+
+                    var package = fs.readFileSync(path.join(process.cwd(),'./package.json'),'utf-8');
+                    var name = JSON.parse(package).name;
+                    data = data.replace(/\'..\/..\/src\'/ig,'\''+name+'\'');
+
+                    //
+                    // if(data.match(/import(\s+)(.*)(\s+)(from)(\s+)\'tinper-bee\'/ig)[0].match(/{/)== null){
+                    //     data = data.replace(/import(\s+)(.*)(\s+)(from)(\s+)\'tinper-bee\'/ig,'import$1{$2}$3$4$5\'tinper-bee\'')
+                    // }
+
                 }catch(e){
 
                 }
