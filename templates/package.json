@@ -15,15 +15,14 @@
   },
   "homepage": "<%= repo_url%>",
   "author": "<%= author%>",
-    "repository": "http://github.com/tinper-bee/<%= packageName%>",
-    "bugs": "<%= repo_url%>/issues",
-    "license": "MIT",
-
-    "main":"./build/index.js",
-    "config":{
+  "repository": "http://github.com/tinper-bee/<%= packageName%>",
+  "bugs": "<%= repo_url%>/issues",
+  "license": "MIT",
+  "main": "./build/index.js",
+  "config": {
     "port": <%= port%>
-    },
-    "scripts": {
+  },
+  "scripts": {
     "dev": "bee-tools run start",
     "build": "bee-tools run build",
     "lint": "bee-tools-test run lint",
@@ -32,22 +31,27 @@
     "coveralls": "bee-tools-test run coverage",
     "browsers": "bee-tools-test run browsers",
     "pub": "bee-tools run pub"
-    },
-    "dependencies": {
-      "classnames": "^2.2.5",
-      "tinper-bee-core": "latest",
-      "babel-runtime": "^6.23.0"
-    },
-    "devDependencies": {
-      "chai": "^3.5.0",
-      "enzyme": "^2.4.1",
-      "react": "15.3.2",
-      "react-addons-test-utils": "15.3.2",
-      "react-dom": "15.3.2",
-      "console-polyfill": "~0.2.1",
-      "es5-shim": "~4.1.10",
-      "bee-panel": "latest",
-      "bee-layout": "latest",
-      "bee-button": "latest"
-    }
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "tinper-bee-core": "latest",
+    "babel-runtime": "^6.23.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "enzyme": "^2.4.1",
+    "react": "15.3.2",
+    "react-addons-test-utils": "15.3.2",
+    "react-dom": "15.3.2",
+    "console-polyfill": "~0.2.1",
+    "es5-shim": "~4.1.10",
+    "bee-panel": "latest",
+    "bee-layout": "latest",
+    "bee-button": "latest"
+  },
+  "peerDependencies": {
+    "react": ">= 15.3.0",
+    "react-dom": ">= 15.3.0",
+    "prop-types": ">= 15.6.0"
+  }
 }

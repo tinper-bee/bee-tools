@@ -13,6 +13,12 @@ react <%= packageName%> component for tinper-bee
 
 some description...
 
+## 依赖
+
+- react >= 15.3.0
+- react-dom >= 15.3.0
+- prop-types >= 15.6.0
+
 ## 使用方法
 
 ```js
