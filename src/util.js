@@ -95,6 +95,12 @@ var utils = {
                                 return "it seems not a valid npm"
                             }
                         }
+                    },
+                    {
+                        type: 'input',
+                        name: 'message',
+                        message: 'what message yon want to commit with',
+                        default: ''
                     }
                 ];
                 resolve(questions);

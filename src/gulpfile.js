@@ -256,7 +256,7 @@ gulp.task('pub', ['pack_build', 'sass_component'], function() {
             file.writeFileFromString(JSON.stringify(pkg, null, ' '), 'package.json');
             console.log(colors.info('#### Git Info ####'));
             spawn.sync('git', ['add', '.'], {stdio: 'inherit'});
-            spawn.sync('git', ['commit', '-m', 'ver. ' + pkg.version], {stdio: 'inherit'});
+            spawn.sync('git', ['commit', '-m', 'publish ' + pkg.version + ' and ' + answers.message], {stdio: 'inherit'});
             spawn.sync('git', ['push', 'origin', answers.branch], {stdio: 'inherit'});
             console.log(colors.info('#### Npm Info ####'));
             spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
