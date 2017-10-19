@@ -105,6 +105,7 @@ var demo1 = [
      "* @description 这是描述",
      "*",
      "*/",
+    "import React, { Component } from 'react';",
     "class Demo1 extends Component {",
     "render () {",
     "return (",
@@ -113,7 +114,8 @@ var demo1 = [
     "</div>",
     ")",
     "}",
-    "}"
+    "}",
+    "export default Demo1"
 ].join('\n');
 
 var mapFileContent = [
