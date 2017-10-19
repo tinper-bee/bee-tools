@@ -33,7 +33,7 @@ var AppName = appname.charAt(0).toUpperCase() + camelCase(appname.slice(1));
 
 var srcComponentContent = [
 "import React, { Component } from 'react';",
-"import PropTypes from 'prop-types",
+"import PropTypes from 'prop-types';",
 "const propTypes = {};",
 "const defaultProps = {};",
 "class " + AppName + " extends Component {render(){return(<h2>Welcome use tinper-bee</h2> )}};",
