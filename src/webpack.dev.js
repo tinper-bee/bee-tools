@@ -66,8 +66,8 @@ module.exports = {
     devtool: 'source-map',
     plugins: [
         // SourceMap plugin will define process.env.NODE_ENV as development
-        new webpack.SourceMapDevToolPlugin({
-            columns: false
-        })
+       // new webpack.SourceMapDevToolPlugin({
+         //   columns: false
+       // })
     ]
 };
