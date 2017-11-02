@@ -22,6 +22,8 @@ var concat = require('gulp-concat');
 var replace = require('gulp-just-replace');
 var es3ify = require("gulp-es3ify");
 var eslint = require('gulp-eslint');
+var conven = require('gulp-conventional-changelog');
+var fse = require('fs-extra');
 
 // webpack
 var webpack = require('webpack');
@@ -31,6 +33,22 @@ colors.setTheme({
     info: ['bold', 'green']
 });
 
+gulp.task('changelog', function () {
+    console.log(colors.info('###### build changelog ######'));
+    if(!fs.existsSync('CHANGELOG.md')){
+        fse.outputFileSync(path.join(process.cwd(),'./CHANGELOG.md'), '', function (err) {
+            if(err) throw err; // => null
+
+        });
+    }
+     gulp.src(path.join(process.cwd(),'./CHANGELOG.md'))
+        .pipe(conven({
+            preset: 'angular',
+            releaseCount: 0,
+            samefile: true
+        }))
+        .pipe(gulp.dest('./'));
+});
 
 gulp.task('pack_demo',function(cb) {
     var p = path.join(process.cwd(),'./demo/demolist');
@@ -254,12 +272,15 @@ gulp.task('pub', ['pack_build', 'sass_component'], function() {
             var pkg = util.getPkg();
             pkg.version = answers.version;
             file.writeFileFromString(JSON.stringify(pkg, null, ' '), 'package.json');
+            console.log(colors.info('#### Npm Info ####'));
+            spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
+            spawn.sync('bee-tools', ['run', 'changelog'], {stdio: 'inherit'});
             console.log(colors.info('#### Git Info ####'));
             spawn.sync('git', ['add', '.'], {stdio: 'inherit'});
             spawn.sync('git', ['commit', '-m', 'publish ' + pkg.version + ' and ' + answers.message], {stdio: 'inherit'});
+            spawn.sync('git', ['tag', pkg.version]);
             spawn.sync('git', ['push', 'origin', answers.branch], {stdio: 'inherit'});
-            console.log(colors.info('#### Npm Info ####'));
-            spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
+
         });
     });
 });
