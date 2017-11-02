@@ -96,12 +96,12 @@ var utils = {
                             }
                         }
                     },
-                    {
-                        type: 'input',
-                        name: 'message',
-                        message: 'what message yon want to commit with',
-                        default: ''
-                    }
+                    // {
+                    //     type: 'input',
+                    //     name: 'message',
+                    //     message: 'what message yon want to commit with',
+                    //     default: ''
+                    // }
                 ];
                 resolve(questions);
             });
