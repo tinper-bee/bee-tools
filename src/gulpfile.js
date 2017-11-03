@@ -35,7 +35,7 @@ colors.setTheme({
 
 
 gulp.task("changelogInit",function(){
-    spawn.sync('npm', ['install', '-g','commitizen'], {stdio: 'inherit'});
+    // spawn.sync('npm', ['install', '-g','commitizen'], {stdio: 'inherit'});
     spawn.sync('commitizen', ['init', 'cz-conventional-changelog','--save','--save-exact','--force'], {stdio: 'inherit'});
     // var index = fs.readFileSync(path.join(process.cwd(),'package.json'),'utf-8',function(error,cont){
 
@@ -50,13 +50,13 @@ gulp.task('changelog', function () {
 
         });
     }
-     gulp.src(path.join(process.cwd(),'./CHANGELOG.md'))
+    gulp.src(path.join(process.cwd(),'./CHANGELOG.md'))
         .pipe(conven({
             preset: 'angular',
             releaseCount: 0,
             samefile: true
-        }))
-        .pipe(gulp.dest('./'));
+    }))
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('pack_demo',function(cb) {
@@ -280,14 +280,14 @@ gulp.task('pub', ['pack_build', 'sass_component'], function() {
             pkg.version = answers.version;
             file.writeFileFromString(JSON.stringify(pkg, null, ' '), 'package.json');
 
-            spawn.sync('git', ['add', '.'], {stdio: 'inherit'});
-            spawn.sync('git', ['cz'], {stdio: 'inherit'});
+            if(answers.checkChangelog === 'y'){
+                spawn.sync('git', ['add', '.'], {stdio: 'inherit'});
+                spawn.sync('git', ['cz'], {stdio: 'inherit'});
 
-            console.log(colors.info('#### Npm Info ####'));
-            // spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
-            spawn.sync('bee-tools', ['run', 'changelog'], {stdio: 'inherit'});
-
-
+                console.log(colors.info('#### Npm Info ####'));
+                // spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
+                spawn.sync('bee-tools', ['run', 'changelog'], {stdio: 'inherit'});    
+            }
             console.log(colors.info('#### Git Info ####'));
             spawn.sync('git', ['add', '.'], {stdio: 'inherit'});
             spawn.sync('git', ['commit', '-m', 'publish ' + pkg.version ], {stdio: 'inherit'});
