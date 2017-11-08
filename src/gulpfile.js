@@ -35,12 +35,8 @@ colors.setTheme({
 
 
 gulp.task("changelogInit",function(){
-    // spawn.sync('npm', ['install', '-g','commitizen'], {stdio: 'inherit'});
     spawn.sync('commitizen', ['init', 'cz-conventional-changelog','--save','--save-exact','--force'], {stdio: 'inherit'});
-    // var index = fs.readFileSync(path.join(process.cwd(),'package.json'),'utf-8',function(error,cont){
-
-    // });
-});
+}); 
 
 gulp.task('changelog', function () {
     console.log(colors.info('###### build changelog ######'));
@@ -285,7 +281,7 @@ gulp.task('pub', ['pack_build', 'sass_component'], function() {
                 spawn.sync('git', ['cz'], {stdio: 'inherit'});
 
                 console.log(colors.info('#### Npm Info ####'));
-                // spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
+                spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
                 spawn.sync('bee-tools', ['run', 'changelog'], {stdio: 'inherit'});    
             }
             console.log(colors.info('#### Git Info ####'));
