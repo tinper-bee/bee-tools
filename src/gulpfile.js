@@ -33,8 +33,10 @@ colors.setTheme({
     info: ['bold', 'green']
 });
 
-
 gulp.task("changelogInit",function(){
+    //设置镜像
+    spawn.sync('npm', ['--registry', 'https://registry.npm.taobao.org','install','express'], {stdio: 'inherit'});
+    //init commitizen
     spawn.sync('commitizen', ['init', 'cz-conventional-changelog','--save','--save-exact','--force'], {stdio: 'inherit'});
 }); 
 
