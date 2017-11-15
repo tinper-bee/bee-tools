@@ -283,7 +283,6 @@ gulp.task('pub', ['pack_build', 'sass_component'], function() {
                 spawn.sync('git', ['cz'], {stdio: 'inherit'});
 
                 console.log(colors.info('#### Npm Info ####'));
-                spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
                 spawn.sync('bee-tools', ['run', 'changelog'], {stdio: 'inherit'});    
             }
             console.log(colors.info('#### Git Info ####'));
@@ -291,6 +290,7 @@ gulp.task('pub', ['pack_build', 'sass_component'], function() {
             spawn.sync('git', ['commit', '-m', 'publish ' + pkg.version ], {stdio: 'inherit'});
             spawn.sync('git', ['tag', pkg.version]);
             spawn.sync('git', ['push', 'origin', answers.branch], {stdio: 'inherit'});
+            spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
 
         });
     });
