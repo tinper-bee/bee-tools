@@ -289,6 +289,7 @@ gulp.task('pub', ['pack_build', 'sass_component'], function() {
             spawn.sync('git', ['add', '.'], {stdio: 'inherit'});
             spawn.sync('git', ['commit', '-m', 'publish ' + pkg.version ], {stdio: 'inherit'});
             spawn.sync('git', ['tag', pkg.version]);
+            spawn.sync('git', ['push', 'origin', 'v'+pkg.version], {stdio: 'inherit'});
             spawn.sync('git', ['push', 'origin', answers.branch], {stdio: 'inherit'});
             spawn.sync(answers.npm, ['publish'], {stdio: 'inherit'});
 
