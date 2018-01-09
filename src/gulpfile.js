@@ -72,6 +72,7 @@ gulp.task("pack_demo", function(cb) {
 
   function explorer(paths) {
     var arr = [],
+      scss_arr = [],
       code = [];
     fs.readdir(paths, function(err, files) {
       if (err) {
@@ -80,106 +81,135 @@ gulp.task("pack_demo", function(cb) {
       }
 
       files.forEach(function(file) {
-        if (file.search(/Demo\d+.js/) == -1) {
-          return false;
-        }
-        var fileName = file.replace(".js", "");
+        if (file.search(/Demo\d+.js/) !== -1) {
+          var fileName = file.replace(".js", "");
 
-        fs.stat(paths + "//" + file, function(err, stat) {
-          //console.log(stat);
-          if (err) {
-            console.log(err);
-            return;
+          fs.stat(paths + "//" + file, function(err, stat) {
+            //console.log(stat);
+            if (err) {
+              console.log(err);
+              return;
+            }
+            if (stat.isDirectory()) {
+              //console.log(paths + "\/" + file + "\/");
+              explorer(path + "/" + file);
+            } else {
+              // console.log(paths + "\/" + file);
+            }
+          });
+          var data = fs.readFileSync(paths + "//" + file, "utf-8");
+          var title, desc;
+          try {
+            title = data.match(/@title.{0,20}/) || [];
+            title = title.join("").replace(/@title/, "");
+          } catch (e) {
+            console.log("please write title like @title");
           }
-          if (stat.isDirectory()) {
-            //console.log(paths + "\/" + file + "\/");
-            explorer(path + "/" + file);
-          } else {
-            // console.log(paths + "\/" + file);
+
+          try {
+            desc = data.match(/@description.{0,150}/) || [];
+            desc = desc.join("").replace(/@description/, "");
+          } catch (e) {
+            console.log("please write description like @description");
           }
-        });
-        var data = fs.readFileSync(paths + "//" + file, "utf-8");
-        var title, desc;
-        try {
-          title = data.match(/@title.{0,20}/) || [];
-          title = title.join("").replace(/@title/, "");
-        } catch (e) {
-          console.log("please write title like @title");
-        }
 
-        try {
-          desc = data.match(/@description.{0,150}/) || [];
-          desc = desc.join("").replace(/@description/, "");
-        } catch (e) {
-          console.log("please write description like @description");
-        }
+          try {
+            data = data.replace(/export(\s+)(.*)/gi, "");
+            var package = fs.readFileSync(
+              path.join(process.cwd(), "./package.json"),
+              "utf-8"
+            );
+            var name = JSON.parse(package).name;
+            var src_reg = /import +([a-zA-Z]+) +from +["']..\/..\/src["'] ?;?/g;
+            var src_reg1 = /import +([a-zA-Z]+) +from +["']..\/..\/src["'] ?;?/;
+            var lib_reg = /import +([a-zA-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\.]+)["']/g;
+            var lib_reg1 = /import +([a-zA-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\.]+)["']/;
+            var component_reg = /import +([a-zA-Z]+) +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/g;
+            var component_reg1 = /import +([a-zA-Z]+) +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/;
+            var data_array = data.match(src_reg),
+              component_arr = data.match(component_reg),
+              lib_arr = data.match(lib_reg),
+              all_arr = [];
+            if (data_array && data_array.length > 0) {
+              for (var i = data_array.length - 1; i >= 0; i--) {
+                all_arr.push(data_array[i].match(src_reg1)[1]);
+              }
+            }
+            if (component_arr && component_arr.length > 0) {
+              for (var j = component_arr.length - 1; j >= 0; j--) {
+                all_arr.push(component_arr[j].match(component_reg1)[1]);
+              }
+            }
+            if (lib_arr && lib_arr.length > 0) {
+              for (var j = lib_arr.length - 1; j >= 0; j--) {
+                data.replace(
+                  src_reg,
+                  "import { " + all_arr.join(", ") + " } from 'tinper-bee';"
+                );
+              }
+            }
+            data = data.replace(
+              src_reg,
+              "import { " + all_arr.join(", ") + " } from 'tinper-bee';"
+            );
+            data = data.replace(component_reg, "");
+            data = data.replace(
+              /import +([a-z0-9A-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\.]+)["']/g,
+              function(match, p1, p2, p3, offset, string) {
+                return "import " + p1 + ' from "tinper-bee/lib/' + p3 + '";';
+              }
+            );
 
-        try {
-          data = data.replace(/export(\s+)(.*)/gi, "");
-          var package = fs.readFileSync(
-            path.join(process.cwd(), "./package.json"),
-            "utf-8"
+            //
+            // if(data.match(/import(\s+)(.*)(\s+)(from)(\s+)\'tinper-bee\'/ig)[0].match(/{/)== null){
+            //     data = data.replace(/import(\s+)(.*)(\s+)(from)(\s+)\'tinper-bee\'/ig,'import$1{$2}$3$4$5\'tinper-bee\'')
+            // }
+          } catch (e) {
+            console.log(e);
+          }
+
+          arr.push({
+            example: "<" + fileName + " />",
+            title: title || fileName,
+            code: data,
+            desc: desc
+          });
+          // code.push(data);
+          code.push(
+            "var " + fileName + ' = require("./demolist/' + fileName + '");'
           );
-          var name = JSON.parse(package).name;
-          var src_reg = /import +([a-zA-Z]+) +from +["']..\/..\/src["'] ?;?/g;
-          var src_reg1 = /import +([a-zA-Z]+) +from +["']..\/..\/src["'] ?;?/;
-          var lib_reg = /import +([a-zA-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\.]+)["']/g;
-          var lib_reg1 = /import +([a-zA-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\.]+)["']/;
-          var component_reg = /import +([a-zA-Z]+) +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/g;
-          var component_reg1 = /import +([a-zA-Z]+) +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/;
-          var data_array = data.match(src_reg),
-            component_arr = data.match(component_reg),
-            lib_arr = data.match(lib_reg),
-            all_arr = [];
-          if (data_array && data_array.length > 0) {
-            for (var i = data_array.length - 1; i >= 0; i--) {
-              all_arr.push(data_array[i].match(src_reg1)[1]);
-            }
-          }
-          if (component_arr && component_arr.length > 0) {
-            for (var j = component_arr.length - 1; j >= 0; j--) {
-              all_arr.push(component_arr[j].match(component_reg1)[1]);
-            }
-          }
-          if (lib_arr && lib_arr.length > 0) {
-            for (var j = lib_arr.length - 1; j >= 0; j--) {
-              data.replace(
-                src_reg,
-                "import { " + all_arr.join(", ") + " } from 'tinper-bee';"
-              );
-            }
-          }
-          data = data.replace(
-            src_reg,
-            "import { " + all_arr.join(", ") + " } from 'tinper-bee';"
-          );
-          data = data.replace(component_reg, "");
-          data = data.replace(
-            /import +([a-z0-9A-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\.]+)["']/g,
-            function(match, p1, p2, p3, offset, string) {
-              return "import " + p1 + ' from "tinper-bee/lib/' + p3 + '";';
-            }
-          );
+        } else if (file.search(/Demo\d+.scss/) !== -1) {
+          var fileName = file.replace(".scss", "");
 
-          //
-          // if(data.match(/import(\s+)(.*)(\s+)(from)(\s+)\'tinper-bee\'/ig)[0].match(/{/)== null){
-          //     data = data.replace(/import(\s+)(.*)(\s+)(from)(\s+)\'tinper-bee\'/ig,'import$1{$2}$3$4$5\'tinper-bee\'')
-          // }
-        } catch (e) {
-          console.log(e);
+          fs.stat(paths + "//" + file, function(err, stat) {
+            //console.log(stat);
+            if (err) {
+              console.log(err);
+              return;
+            }
+            if (stat.isDirectory()) {
+              //console.log(paths + "\/" + file + "\/");
+              explorer(path + "/" + file);
+            } else {
+              // console.log(paths + "\/" + file);
+            }
+          });
+          var data = fs.readFileSync(paths + "//" + file, "utf-8");
+
+          scss_arr.push({
+            example: "<" + fileName + " />",
+            scss_code: data
+          });
         }
-
-        arr.push({
-          example: "<" + fileName + " />",
-          title: title || fileName,
-          code: data,
-          desc: desc
-        });
-        // code.push(data);
-        code.push(
-          "var " + fileName + ' = require("./demolist/' + fileName + '");'
-        );
       });
+      for (var index = 0; index < scss_arr.length; index++) {
+          var element = scss_arr[index];
+          for(var j = 0; j<arr.length; j++){
+              if(element.example === arr[j].example){
+                Object.assign(arr[j],element);
+              }
+          }
+      }
 
       var index = fs.readFileSync(
         path.join(process.cwd(), "./demo/index-demo-base.js"),
