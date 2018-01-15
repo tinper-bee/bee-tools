@@ -49,11 +49,7 @@ gulp.task("changelogInit", function() {
 gulp.task("changelog", function() {
   console.log(colors.info("###### build changelog ######"));
   if (!fs.existsSync("CHANGELOG.md")) {
-    fse.outputFileSync(path.join(process.cwd(), "./CHANGELOG.md"), "", function(
-      err
-    ) {
-      if (err) throw err; // => null
-    });
+    fse.outputFileSync(path.join(process.cwd(), "./CHANGELOG.md"), "");
   }
   gulp
     .src(path.join(process.cwd(), "./CHANGELOG.md"))

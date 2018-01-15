@@ -27,4 +27,5 @@ npm install -g bee-tools
 | 3 | bee-tools run dep | 下载依赖 |
 | 4 | bee-tools run update | 更新依赖 |
 | 5 | bee-tools run pub | 集成了(发布npm包、提交github、生成changelog)功能|
-| 6 | bee-tools run loginit | 初始化cz-conventional-changelog |
+| 6 | bee-tools run changelogInit | 初始化cz-conventional-changelog |
+| 7 | bee-tools run changelog | 生成CHANGELOG.md |

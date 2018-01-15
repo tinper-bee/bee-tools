@@ -26,3 +26,4 @@ spm_modules
 dist
 build
 assets/**/*.css
+npm-debug.log*
