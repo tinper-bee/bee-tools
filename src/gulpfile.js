@@ -118,13 +118,11 @@ gulp.task("pack_demo", function(cb) {
             var name = JSON.parse(package).name;
             var src_reg = /import +([a-zA-Z]+) +from +["']..\/..\/src["'] ?;?/g;
             var src_reg1 = /import +([a-zA-Z]+) +from +["']..\/..\/src["'] ?;?/;
-            var lib_reg = /import +([a-zA-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\.]+)["']/g;
-            var lib_reg1 = /import +([a-zA-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\.]+)["']/;
-            var component_reg = /import +([a-zA-Z]+) +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/g;
-            var component_reg1 = /import +([a-zA-Z]+) +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/;
+            var lib_reg = /import +([a-zA-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\._]+)["']/g;
+            var component_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/g;
+            var component_reg1 = /import +{?([a-zA-Z_\, ]+)}? +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/;
             var data_array = data.match(src_reg),
               component_arr = data.match(component_reg),
-              lib_arr = data.match(lib_reg),
               all_arr = [];
             if (data_array && data_array.length > 0) {
               for (var i = data_array.length - 1; i >= 0; i--) {
@@ -136,21 +134,13 @@ gulp.task("pack_demo", function(cb) {
                 all_arr.push(component_arr[j].match(component_reg1)[1]);
               }
             }
-            if (lib_arr && lib_arr.length > 0) {
-              for (var j = lib_arr.length - 1; j >= 0; j--) {
-                data.replace(
-                  src_reg,
-                  "import { " + all_arr.join(", ") + " } from 'tinper-bee';"
-                );
-              }
-            }
             data = data.replace(
               src_reg,
               "import { " + all_arr.join(", ") + " } from 'tinper-bee';"
             );
             data = data.replace(component_reg, "");
             data = data.replace(
-              /import +([a-z0-9A-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\.]+)["']/g,
+              lib_reg,
               function(match, p1, p2, p3, offset, string) {
                 return "import " + p1 + ' from "tinper-bee/lib/' + p3 + '";';
               }
