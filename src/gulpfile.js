@@ -116,9 +116,9 @@ gulp.task("pack_demo", function(cb) {
               "utf-8"
             );
             var name = JSON.parse(package).name;
-            var src_reg = /import +([a-zA-Z]+) +from +["']..\/..\/src["'] ?;?/g;
-            var src_reg1 = /import +([a-zA-Z]+) +from +["']..\/..\/src["'] ?;?/;
-            var lib_reg = /import +([a-zA-Z]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\._]+)["']/g;
+            var src_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/g;
+            var src_reg1 = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/;
+            var lib_reg = /import +([a-zA-Z_]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\._]+)["']/g;
             var component_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/g;
             var component_reg1 = /import +{?([a-zA-Z_\, ]+)}? +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/;
             var data_array = data.match(src_reg),
