@@ -116,13 +116,16 @@ gulp.task("pack_demo", function(cb) {
               "utf-8"
             );
             var name = JSON.parse(package).name;
+            var react_reg = /import[a-zA-Z_\, ]+{?([a-zA-Z_\, ]+)}? +from +["']react([a-zA-Z_\, ]?)+["'] ?;?/g;
             var src_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/g;
             var src_reg1 = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/;
+            var extra_src_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src\/index(\.js)?["'] ?;?/g;
             var lib_reg = /import +([a-zA-Z_]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\._]+)["']/g;
             var component_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/g;
             var component_reg1 = /import +{?([a-zA-Z_\, ]+)}? +from +["']bee-[a-zA-Z-]+["'] ?;?[\r\n]?/;
             var data_array = data.match(src_reg),
               component_arr = data.match(component_reg),
+              extra_src_arr = data.match(extra_src_reg),
               all_arr = [];
             if (data_array && data_array.length > 0) {
               for (var i = data_array.length - 1; i >= 0; i--) {
@@ -134,11 +137,31 @@ gulp.task("pack_demo", function(cb) {
                 all_arr.push(component_arr[j].match(component_reg1)[1]);
               }
             }
-            data = data.replace(
-              src_reg,
-              "import { " + all_arr.join(", ") + " } from 'tinper-bee';"
-            );
             data = data.replace(component_reg, "");
+            if(extra_src_arr && extra_src_arr.length > 0){
+              data = data.replace(
+                extra_src_reg,
+                function(match, p1, p2, p3, offset, string) {
+                  if(all_arr && all_arr.length>0){
+                    return "import " + p1 + ' from "tinper-bee/lib/' + p1 + '";'+"\nimport { " + all_arr.join(", ") + " } from 'tinper-bee';"
+                  }else{
+                    return "import " + p1 + ' from "tinper-bee/lib/' + p1 + '";'
+                  }
+                }
+              );  
+            }else if(data_array && data_array.length > 0){
+              data = data.replace(
+                src_reg,
+                "import { " + all_arr.join(", ") + " } from 'tinper-bee';");
+            }else{
+              data = data.replace(
+                react_reg,
+                function(match, p1, p2, p3, offset, string) {
+                  return match+"\nimport { " + all_arr.join(", ") + " } from 'tinper-bee';"
+                }
+                
+              );
+            }
             data = data.replace(
               lib_reg,
               function(match, p1, p2, p3, offset, string) {
