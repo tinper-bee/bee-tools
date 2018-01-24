@@ -96,7 +96,7 @@ gulp.task("pack_demo", function(cb) {
           var data = fs.readFileSync(paths + "//" + file, "utf-8");
           var title, desc;
           try {
-            title = data.match(/@title.{0,20}/) || [];
+            title = data.match(/@title.{0,30}/) || [];
             title = title.join("").replace(/@title/, "");
           } catch (e) {
             console.log("please write title like @title");
