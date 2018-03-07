@@ -142,10 +142,15 @@ gulp.task("pack_demo", function(cb) {
               data = data.replace(
                 extra_src_reg,
                 function(match, p1, p2, p3, offset, string) {
+                  //对DatePicker和Timepicker处理成首字母大写
+                  var p1_ = p1;
+                  if(p1_ === 'DatePicker' || p1_ === 'Timepicker'){
+                    p1_ = p1_.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
+                  }
                   if(all_arr && all_arr.length>0){
-                    return "import " + p1 + ' from "tinper-bee/lib/' + p1 + '";'+"\nimport { " + all_arr.join(", ") + " } from 'tinper-bee';"
+                    return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";'+"\nimport { " + all_arr.join(", ") + " } from 'tinper-bee';"
                   }else{
-                    return "import " + p1 + ' from "tinper-bee/lib/' + p1 + '";'
+                    return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";'
                   }
                 }
               );  
@@ -165,7 +170,12 @@ gulp.task("pack_demo", function(cb) {
             data = data.replace(
               lib_reg,
               function(match, p1, p2, p3, offset, string) {
-                return "import " + p1 + ' from "tinper-bee/lib/' + p3 + '";';
+                //对DatePicker和Timepicker处理成首字母大写
+                var p1_ = p3;
+                if(p1_ === 'DatePicker' || p1_ === 'Timepicker'){
+                  p1_ = p1_.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
+                }
+                return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";';
               }
             );
 
