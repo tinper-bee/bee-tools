@@ -76,6 +76,14 @@ gulp.task("pack_demo", function(cb) {
         return;
       }
 
+      function sortNumber(a,b)
+      {
+          return a.replace(/[^0-9]/ig,"") - b.replace(/[^0-9]/ig,"")
+      }
+
+
+      files = files.sort(sortNumber);
+
       files.forEach(function(file) {
         if (file.search(/Demo\d+.js/) !== -1) {
           var fileName = file.replace(".js", "");
