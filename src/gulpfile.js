@@ -430,8 +430,8 @@ gulp.task("pub", ["pack_build", "sass_component"],async function() {
   spawn.sync("git", ["push", "origin", answers.branch], {
     stdio: "inherit"
   });
-  await global.getGithubToken();
   spawn.sync(answers.npm, ["publish"], { stdio: "inherit" });
+  // await global.getGithubToken();
 });
 
 gulp.task("releases",async function() {

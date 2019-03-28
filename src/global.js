@@ -3,6 +3,7 @@ var file = require('html-wiring');
 var path = require('path');
 var Promise = require('promise');
 var git = require('git-rev');
+var colors = require("colors/safe");
 var fs = require('fs');
 var inquirer = require("inquirer");
 const gh = require('ghreleases');
@@ -23,9 +24,9 @@ function fsExistsSync(path) {
   return true;
 }
 
-function getRcFileDate(){
+async function getRcFileDate(){
   let data = null;
-  if(fsExistsSync(filePath)){
+  if(await fsExistsSync(filePath)){
       return propertiesParser.read(filePath);
   }
   return null;
@@ -50,7 +51,7 @@ return JSON.parse(_package);
 
 
 async function getGithubToken(){
-  let data = getRcFileDate(),token = "";
+  let data = await getRcFileDate(),token = "";
   if(!data || !data.token){
       var getToken = require('./tokenIndex.js')
       getToken(['repo'], new Date().getTime(), 'http://noteurl.com/',async function(err, _data) {
@@ -81,8 +82,10 @@ async function createRelease(auth){
       name: ("v"+pack.version),
       body: answers.describe
   }
+  console.log(" data=== ",data);
+  console.log(" auth=== ",auth);
   gh.create(auth,'tinper-acs', pack.name, data, (err, release) => {
-      console.log(err?err:colors.info("\n \(^o^)  create release is success !"));
+      err?console.log(err):console.log(colors.info("\n \(^o^)  create release is success !"));
   })
 }
 

@@ -5,6 +5,7 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/tinper-bee/bee-tools.svg)](http://isitmaintained.com/project/tinper-bee/bee-tools "Percentage of issues still open")
 
 tinper-bee 组件库编写组件开发工具
+bee-tools 集成了ynpm 包的安装，新增了包的发布，且自动生成releases，并解决了不兼容node>8的版本报错的问题。
 
 ## 下载
 ```
@@ -29,4 +30,5 @@ npm install -g bee-tools
 | 5 | bee-tools run pub | 集成了(发布npm包、提交github、生成changelog)功能|
 | 6 | bee-tools run changelogInit | 初始化cz-conventional-changelog |
 | 7 | bee-tools run changelog | 生成CHANGELOG.md |
-| 8 | bee-tools create ac-test110 | 创建项目(应用组件、基础组件) |
+| 8 | bee-tools create ac-xx/bee-xx | 创建项目(应用组件、基础组件) |
+| 9 | bee-tools run releases | 创建项目(应用组件、基础组件) |
