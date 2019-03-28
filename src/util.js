@@ -9,7 +9,6 @@ var pkg = JSON.parse(file.readFileAsString('package.json'));
 async function getPackage() {
     if(fsExistsSync("package.json")){
         let _pack = JSON.parse(await fs.readFileSync(path.join("package.json"),'utf-8'));
-        console.log(" --- ",_pack.config);
         return _pack;
     }
     return "";
@@ -67,6 +66,9 @@ var utils = {
         return JSON.parse(file.readFileAsString('package.json'));;
     },
     getPackages: function() {
+        if(!pkg){
+            pkg = this.getPkg();
+        }
         var commands = [];
         for (var item in pkg.devDependencies) {
             if (item !== 'bee-tools') {
@@ -76,11 +78,13 @@ var utils = {
         commands.push('--production');
         return commands;
     },
-    getQuestions: function() {
+    getQuestions:async function() {
+        if(!pkg){
+            pkg = getPkg();
+        }
         var me = this;
         return new Promise(function(resolve, reject) {
             git.branch(function(branch) {
-                console.log(" ========== ",branch);
                 var defaultBranch = branch;
                 var defaultNpm = /@ali/.test(pkg.name) ? 'tnpm' : 'npm';
                 var questions = [

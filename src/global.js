@@ -10,8 +10,6 @@ const gh = require('ghreleases');
 var  filePath = process.env.HOME+"/.bee-tools";
 
 var utils = {
-  setRcFile,
-  getProPack,
   getGithubToken
 }
 
@@ -84,7 +82,7 @@ async function createRelease(auth){
       body: answers.describe
   }
   gh.create(auth,'tinper-acs', pack.name, data, (err, release) => {
-      console.log(err?err:"create release is success !");
+      console.log(err?err:colors.info("\n \(^o^)  create release is success !"));
   })
 }
 

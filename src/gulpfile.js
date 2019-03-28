@@ -25,6 +25,19 @@ var eslint = require("gulp-eslint");
 var conven = require("gulp-conventional-changelog");
 var fse = require("fs-extra");
 
+colors.setTheme({
+  silly: 'rainbow',
+  input: 'grey',
+  verbose: 'cyan',
+  prompt: 'grey',
+  info: 'green',
+  data: 'grey',
+  help: 'cyan',
+  warn: 'yellow',
+  debug: 'blue',
+  error: 'red'
+});
+
 // webpack
 var webpack = require("webpack");
 
@@ -391,36 +404,34 @@ gulp.task("update", function() {
   });
 });
 
-gulp.task("pub", ["pack_build", "sass_component"],  function() {
-  
-  util.getQuestions().then(function(questions) {
-    inquirer.prompt(questions).then(function(answers) {
-      var pkg = util.getPkg();
-      pkg.version = answers.version;
-      file.writeFileFromString(JSON.stringify(pkg, null, " "), "package.json");
+gulp.task("pub", ["pack_build", "sass_component"],async function() {
+  let questions = await util.getQuestions();
+  let answers = await inquirer.prompt(questions);
+  var pkg = util.getPkg();
+  pkg.version = answers.version;
+  file.writeFileFromString(JSON.stringify(pkg, null, " "), "package.json");
 
-      if (answers.checkChangelog === "y") {
-        spawn.sync("git", ["add", "."], { stdio: "inherit" });
-        spawn.sync("git", ["cz"], { stdio: "inherit" });
+  if (answers.checkChangelog === "y") {
+    spawn.sync("git", ["add", "."], { stdio: "inherit" });
+    spawn.sync("git", ["cz"], { stdio: "inherit" });
 
-        console.log(colors.info("#### Npm Info ####"));
-        spawn.sync("bee-tools", ["run", "changelog"], { stdio: "inherit" });
-      }
-      console.log(colors.info("#### Git Info ####"));
-      spawn.sync("git", ["add", "."], { stdio: "inherit" });
-      spawn.sync("git", ["commit", "-m", "publish " + pkg.version], {
-        stdio: "inherit"
-      });
-      spawn.sync("git", ["tag", "v" + pkg.version]);
-      spawn.sync("git", ["push", "origin", "v" + pkg.version], {
-        stdio: "inherit"
-      });
-      spawn.sync("git", ["push", "origin", answers.branch], {
-        stdio: "inherit"
-      });
-      // spawn.sync(answers.npm, ["publish"], { stdio: "inherit" });
-    });
+    console.log(colors.info("#### Npm Info ####"));
+    spawn.sync("bee-tools", ["run", "changelog"], { stdio: "inherit" });
+  }
+  console.log(colors.info("#### Git Info ####"));
+  spawn.sync("git", ["add", "."], { stdio: "inherit" });
+  spawn.sync("git", ["commit", "-m", "publish " + pkg.version], {
+    stdio: "inherit"
   });
+  spawn.sync("git", ["tag", "v" + pkg.version]);
+  spawn.sync("git", ["push", "origin", "v" + pkg.version], {
+    stdio: "inherit"
+  });
+  spawn.sync("git", ["push", "origin", answers.branch], {
+    stdio: "inherit"
+  });
+  await global.getGithubToken();
+  spawn.sync(answers.npm, ["publish"], { stdio: "inherit" });
 });
 
 gulp.task("releases",async function() {
