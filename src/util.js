@@ -1,8 +1,34 @@
 var file = require('html-wiring');
 var path = require('path');
-var pkg = JSON.parse(file.readFileAsString('package.json'));
 var Promise = require('promise');
 var git = require('git-rev');
+var fs = require('fs');
+// var pkg = getPackage();
+var pkg = JSON.parse(file.readFileAsString('package.json'));
+
+async function getPackage() {
+    if(fsExistsSync("package.json")){
+        let _pack = JSON.parse(await fs.readFileSync(path.join("package.json"),'utf-8'));
+        console.log(" --- ",_pack.config);
+        return _pack;
+    }
+    return "";
+}
+
+//检测文件或者文件夹存在 nodeJS
+function fsExistsSync(path) {
+    try{
+        fs.accessSync(path,fs.F_OK);
+    }catch(e){
+        return false;
+    }
+    return true;
+}
+
+// if(file.readFileAsString('package.json')){
+//     pkg = JSON.parse(file.readFileAsString('package.json'));
+// }
+// // var pkg = JSON.parse(file.readFileAsString('package.json'));
 
 var utils = {
     versionCompare: function(a, b) {
@@ -38,7 +64,7 @@ var utils = {
         return path.join.apply(path, args);
     },
     getPkg: function() {
-        return pkg;
+        return JSON.parse(file.readFileAsString('package.json'));;
     },
     getPackages: function() {
         var commands = [];
@@ -54,6 +80,7 @@ var utils = {
         var me = this;
         return new Promise(function(resolve, reject) {
             git.branch(function(branch) {
+                console.log(" ========== ",branch);
                 var defaultBranch = branch;
                 var defaultNpm = /@ali/.test(pkg.name) ? 'tnpm' : 'npm';
                 var questions = [

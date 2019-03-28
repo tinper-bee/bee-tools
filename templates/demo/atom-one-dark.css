@@ -22,13 +22,13 @@ hue-6-2: #e6c07b
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  color: #abb2bf;
-  background: #282c34;
+  color: #424242;
+  background: #FAFAFA;
 }
 
 .hljs-comment,
 .hljs-quote {
-  color: #5c6370;
+  color: #424242;
   font-style: italic;
 }
 
@@ -93,4 +93,130 @@ hue-6-2: #e6c07b
 
 .hljs-link {
   text-decoration: underline;
+}
+
+.component-demo .u-panel {
+  padding: 18px 20px;
+  border: 1px solid #F0F0F0;
+}
+.component-demo .u-panel-default .u-panel-heading{
+  background-color: #fff;
+  padding: 0;
+  position: relative;
+  margin-bottom: 20px;
+}
+.component-demo p{
+  margin: 0;
+  font-size: 14px;
+}
+
+.component-demo .component-title{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.component-demo .component-code{
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #E14C46;
+  font-size: 14px;
+  cursor: pointer;
+}
+.component-demo .u-panel .u-panel-body{
+  padding: 0;
+}
+
+.component-drawerc .pre-js,.component-drawerc .pre-css{
+  margin: 0;
+}
+
+
+.component-drawerc .drawer-body {
+  padding: 20px 20px;
+}
+.component-drawerc .component-code-copy {
+  font-size: 14px;
+  font-weight: 800;
+  color: #424242;
+  padding: 10px 0;
+  position: relative;
+}
+.component-drawerc .component-code-copy .uf-copy::before{
+  content: "\e6fc";
+}
+.component-drawerc .component-code-copy .uf{
+  font-weight: 100;
+}
+.component-drawerc .component-code-copy.copy-css{
+  margin-top: 20px;
+}
+
+.component-drawerc .component-code-copy .u-clipboard{
+  position: absolute;
+  right: 0;
+}
+/* 抽屉组件样式覆盖 */
+.component-drawerc{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  width: 0;
+  height: 100%;
+}
+.component-drawerc .drawer-mask{
+  background-color: rgba(0,0,0,.3);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+.component-drawerc .drawer-close{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.component-drawerc .drawer{
+  position: fixed;
+  background-color: #fff;
+  transition: transform 300ms ease-in-out;
+  overflow: auto;
+}
+.component-drawerc .drawer-left{
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+.component-drawerc .drawer-right{
+  top: 0;
+  right: 0;
+  height: 100%;
+}
+.component-drawerc .drawer-top{
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.component-drawerc .drawer-bottom{
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.component-drawerc .drawer-header{
+  padding: 0 20px;
+  border-radius: 0;
+  background: #E14C46;
+  color: #fff;
+  border-bottom: 1px solid #e8e8e8;
+}
+.component-drawerc .drawer-header-title{
+  margin: 0;
+  color: #fff;
+  height: 40px;
+  line-height: 40px;
 }

@@ -23,7 +23,6 @@ _site
 sea-modules
 spm_modules
 .cache
-dist
 build
 assets/**/*.css
 npm-debug.log*

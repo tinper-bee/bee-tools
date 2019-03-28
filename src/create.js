@@ -4,6 +4,9 @@ var fs = require('fs');
 //var moment = require('moment');
 
 module.exports = function (name, options) {
+    if(!/bee-/.test(name)){
+        name = "bee-"+name;
+    }
 var author = options.author || 'Yonyou FED',
     pkgName = options.pkgName || name,
     version = options.tbVersion || '0.0.1',
@@ -53,12 +56,12 @@ var srcComponentScss = [
 ].join('\n');
 
 var demoScss = [
-  '@import "../node_modules/tinper-bee-core/scss/index.scss";',
+//   '@import "../node_modules/tinper-bee-core/scss/index.scss";',
   '@import "../src/' + AppName + '.scss";',
-  '@import "../node_modules/bee-panel/src/Panel.scss";',
-  '@import "../node_modules/bee-layout/src/Layout.scss";',
-  '@import "../node_modules/bee-button/src/Button.scss";',
-  '@import "../node_modules/bee-transition/src/Transition.scss";'
+//   '@import "../node_modules/bee-panel/src/Panel.scss";',
+//   '@import "../node_modules/bee-layout/src/Layout.scss";',
+//   '@import "../node_modules/bee-button/src/Button.scss";',
+//   '@import "../node_modules/bee-transition/src/Transition.scss";'
 ].join('\n');
 
 var demojs = [
@@ -84,18 +87,28 @@ var testComponentjs = [
 
 var docsContent = [
     "# "+AppName,
-    "## 代码演示",
-    "## API",
-    "|参数|说明|类型|默认值|",
-    "|:---|:-----|:----|:------|"
+    "\n\n ## 何时使用",
+    "\n\n ## 如何使用",
+    "\n\n ## 代码演示",
+    "\n ## API",
+    "\n |参数|说明|类型|默认值|",
+    "|:---|:-----|:----|:------|",
+    "\n\n ## 注意事项",
+     "\n 暂无",
+    "\n ## 更新日志",
 ].join('\n');
 
 var docsContentEn = [
-    "## " + AppName,
-    "## Code display",
-    "## API",
-    "|Property|Description|Type|Default|",
-    "|:---|:-----|:----|:------|"
+    "# "+AppName,
+    "\n\n ## When to use",
+    "\n\n ## How to use",
+    "\n\n ## Code display",
+    "\n ## API",
+    "\n |Property|Description|Type|Default|",
+    "|:---|:-----|:----|:------|",
+    "\n\n ## 注意事项",
+     "\n 暂无",
+    "\n ## 更新日志",
 ].join('\n');
 
 var demo1 = [

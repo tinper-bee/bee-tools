@@ -6,6 +6,7 @@ var file = require("html-wiring");
 var colors = require("colors/safe");
 var util = require("./util");
 var path = require("path");
+var global = require("./global");
 
 var browserSync = require("browser-sync");
 var reload = browserSync.reload;
@@ -248,7 +249,6 @@ gulp.task("pack_demo", function(cb) {
       str = str.replace(/ple":"</gi, 'ple":<').replace(/","tit/gi, ',"tit');
 
       index = index.replace(/\{demolist\}/, code.join("") + str);
-
       fs.writeFile(path.join(process.cwd(), "./demo/index.js"), index, function(
         err
       ) {
@@ -391,7 +391,8 @@ gulp.task("update", function() {
   });
 });
 
-gulp.task("pub", ["pack_build", "sass_component"], function() {
+gulp.task("pub", ["pack_build", "sass_component"],  function() {
+  
   util.getQuestions().then(function(questions) {
     inquirer.prompt(questions).then(function(answers) {
       var pkg = util.getPkg();
@@ -417,7 +418,11 @@ gulp.task("pub", ["pack_build", "sass_component"], function() {
       spawn.sync("git", ["push", "origin", answers.branch], {
         stdio: "inherit"
       });
-      spawn.sync(answers.npm, ["publish"], { stdio: "inherit" });
+      // spawn.sync(answers.npm, ["publish"], { stdio: "inherit" });
     });
   });
 });
+
+gulp.task("releases",async function() {
+  await global.getGithubToken();
+})

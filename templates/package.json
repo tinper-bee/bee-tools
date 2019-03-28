@@ -50,6 +50,8 @@
     "console-polyfill": "~0.2.1",
     "cz-conventional-changelog": "^2.1.0",
     "es5-shim": "~4.1.10",
+    "bee-drawer": "0.0.2",
+    "bee-clipboard": "^2.0.0",
     "bee-panel": "latest",
     "bee-layout": "latest",
     "bee-button": "latest"
