@@ -24,9 +24,6 @@ function getGithubToken(scopes, note, noteUrl, github, ready) {
     if(err) {
       return ready(err)
     }
-    console.log(" --------");
-    console.log(config);
-    console.log(" ------=====--");
     github.authenticate({
         type: 'basic'
       , username: config.username

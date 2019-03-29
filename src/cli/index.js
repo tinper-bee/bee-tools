@@ -42,10 +42,8 @@ program
     .action(function (dir,otherDirs){
         inquirer.prompt(questions.component).then(function(answers) {
             if(/bee-/.test(dir)){
-                console.log("answers ---333- ",answers);
                 require('../create')(dir,otherDirs);
             }else{
-                console.log("answers ---- ",answers);
                 require('../create-acs')(dir,otherDirs);
             }
         });
