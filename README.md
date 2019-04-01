@@ -31,4 +31,4 @@ npm install -g bee-tools
 | 6 | bee-tools run changelogInit | 初始化cz-conventional-changelog |
 | 7 | bee-tools run changelog | 生成CHANGELOG.md |
 | 8 | bee-tools create ac-xx/bee-xx | 创建项目(应用组件、基础组件) |
-| 9 | bee-tools run releases | 创建项目(应用组件、基础组件) |
+| 9 | bee-tools run releases | 创建releases |

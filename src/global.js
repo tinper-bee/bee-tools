@@ -55,8 +55,6 @@ async function getGithubToken(){
   if(!data || !data.token){
       var getToken = require('./tokenIndex.js')
       getToken(['repo'], new Date().getTime(), 'http://noteurl.com/',async function(err, _data) {
-          console.log("-result-");
-          console.log(_data);
           setRcFile(_data);
           await createRelease(_data);
       });
@@ -82,8 +80,6 @@ async function createRelease(auth){
       name: ("v"+pack.version),
       body: answers.describe
   }
-  console.log(" data=== ",data);
-  console.log(" auth=== ",auth);
   gh.create(auth,'tinper-acs', pack.name, data, (err, release) => {
       err?console.log(err):console.log(colors.info("\n \(^o^)  create release is success !"));
   })
@@ -91,26 +87,3 @@ async function createRelease(auth){
 
 
 module.exports = utils;
-
-
-  // var tinperPath =  process.cwd();
-  // console.log("__dirname",process.__dirname);
-  // console.log("__filename",filePath);
-  // let data = propertiesParser.read(filePath);
-  // console.log("__filename",data.name);
-  
-
-
-  // const gh = require('ghreleases')
-  // const auth = {
-  //     token: '5c6dbebde5935b9edf9cf778185f892a0a119646',
-  //     user: 'jonyshi'
-  //   }
-  // const data = {
-  //     tag_name: '1.2.3-test',
-  //     name: 'Release name for 1.2.3-test',
-  //     body: 'Body text of release goes here'
-  //   }
-  //   gh.create(auth,'tinper-acs', 'ac-test', data, (err, release) => {
-  //     console.log("create release is success ! ")
-  //   })
