@@ -16,6 +16,7 @@ var shelljs = require("shelljs");
 var gulp = require("gulp");
 var babel = require("gulp-babel");
 var sass = require("gulp-sass");
+// var csso = require('gulp-csso');
 var sourcemaps = require("gulp-sourcemaps");
 var autoprefix = require("gulp-autoprefixer");
 var concat = require("gulp-concat");
@@ -172,7 +173,11 @@ gulp.task("pack_demo", function(cb) {
                   if(all_arr && all_arr.length>0){
                     return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";'+"\nimport { " + all_arr.join(", ") + " } from 'tinper-bee';"
                   }else{
-                    return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";'
+                    if(name.toUpperCase().search("AC") != -1){
+                      return "import " + p1 + ' from "' + name + '";'
+                    }else{
+                      return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";'
+                    }
                   }
                 }
               );  
@@ -189,6 +194,7 @@ gulp.task("pack_demo", function(cb) {
                 
               );
             }
+            
             data = data.replace(
               lib_reg,
               function(match, p1, p2, p3, offset, string) {
