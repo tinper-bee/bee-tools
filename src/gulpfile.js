@@ -11,7 +11,8 @@ var global = require("./global");
 var browserSync = require("browser-sync");
 var reload = browserSync.reload;
 var shelljs = require("shelljs");
-
+var svgSymbols = require('gulp-svg-symbols');
+var rename = require("gulp-rename");
 // gulp & gulp plugin
 var gulp = require("gulp");
 var babel = require("gulp-babel");
@@ -140,7 +141,7 @@ gulp.task("pack_demo", function(cb) {
             );
             var name = JSON.parse(package).name;
             var react_reg = /import[a-zA-Z_\, ]+{?([a-zA-Z_\, ]+)}? +from +["']react([a-zA-Z_\, ]?)+["'] ?;?/g;
-            var src_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/g;
+            var src_reg = /import +{?([bd-zBD-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/g;
             var src_reg1 = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/;
             var extra_src_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src\/index(\.js)?["'] ?;?/g;
             var lib_reg = /import +([a-zA-Z_]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\._]+)["']/g;
@@ -173,7 +174,7 @@ gulp.task("pack_demo", function(cb) {
                   if(all_arr && all_arr.length>0){
                     return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";'+"\nimport { " + all_arr.join(", ") + " } from 'tinper-bee';"
                   }else{
-                    if(name.toUpperCase().search("AC") != -1){
+                    if(name.toUpperCase().search("AC") != -1 || name.toUpperCase().search("REF") != -1){
                       return "import " + p1 + ' from "' + name + '";'
                     }else{
                       return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";'
@@ -182,17 +183,22 @@ gulp.task("pack_demo", function(cb) {
                 }
               );  
             }else if(data_array && data_array.length > 0){
-              data = data.replace(
-                src_reg,
-                "import { " + all_arr.join(", ") + " } from 'tinper-bee';");
+                if(name.toUpperCase().search("AC") != -1 || name.toUpperCase().search("REF") != -1){
+                  data = data.replace(
+                    src_reg,
+                    "import  " + all_arr.join(", ") + "  from '"+name+"';");
+                    console.log("all_arr ",all_arr);
+                }else{
+                  data = data.replace(
+                    src_reg,
+                    "import { " + all_arr.join(", ") + " } from 'tinper-bee';");
+                }
             }else{
               data = data.replace(
                 react_reg,
                 function(match, p1, p2, p3, offset, string) {
                   return match+"\nimport { " + all_arr.join(", ") + " } from 'tinper-bee';"
-                }
-                
-              );
+                });
             }
             
             data = data.replace(
@@ -203,14 +209,13 @@ gulp.task("pack_demo", function(cb) {
                 if(p1_ === 'DatePicker' || p1_ === 'Timepicker'){
                   p1_ = p1_.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
                 }
-                return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";';
+                if(name.toUpperCase().search("AC") != -1 || name.toUpperCase().search("REF") != -1){
+                  return "import " + p1 + ' from "' + name + '"';
+                }else{
+                  return "import " + p1 + ' from "tinper-bee/lib/' + p1_ + '";';
+                }
               }
             );
-
-            //
-            // if(data.match(/import(\s+)(.*)(\s+)(from)(\s+)\'tinper-bee\'/ig)[0].match(/{/)== null){
-            //     data = data.replace(/import(\s+)(.*)(\s+)(from)(\s+)\'tinper-bee\'/ig,'import$1{$2}$3$4$5\'tinper-bee\'')
-            // }
           } catch (e) {
             console.log(e);
           }
@@ -325,6 +330,33 @@ gulp.task("sass_component", function() {
   console.log("###### sass_component done ######");
 });
 
+
+gulp.task("svgScript", function() {
+  return gulp
+    .src([path.join(process.cwd(), "./src/static/**/*.svg")],function(a,b){
+      console.log("1111-",a);
+      console.log("2222-",b)
+    })
+    .pipe(
+      svgSymbols({
+        slug: name => {
+          console.log("name--",name) 
+          return name;
+        },
+      })
+    )
+    .pipe(rename((path) => {
+      console.log("3333--",path)
+      path.basename = 'loading';
+    }),(a,b)=>{
+      console.log("a-",a);
+      console.log("b-",b)
+    })
+   .pipe(gulp.dest('build/static/images/'));
+    // .pipe(gulp.dest('build'));
+    // .pipe(gulp.dest(function(file){return 'build/static/images/'+file.base+'.svg';}));
+})
+
 gulp.task("sass_demo", function(cb) {
   gulp
     .src([path.join(process.cwd(), "./demo/**/*.scss")])
@@ -392,7 +424,7 @@ gulp.task("server", ["pack_demo", "sass_demo"], function() {
   gulp.watch(path.join(process.cwd(), "./demo/demolist/*.js"), ["pack_demo"]);
 });
 
-gulp.task("build", ["pack_build", "sass_component"], function() {});
+gulp.task("build", ["pack_build", "sass_component","svgScript"], function() {});
 
 gulp.task("start", ["server"]);
 
