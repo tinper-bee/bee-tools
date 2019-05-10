@@ -187,7 +187,6 @@ gulp.task("pack_demo", function(cb) {
                   data = data.replace(
                     src_reg,
                     "import  " + all_arr.join(", ") + "  from '"+name+"';");
-                    console.log("all_arr ",all_arr);
                 }else{
                   data = data.replace(
                     src_reg,
