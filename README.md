@@ -20,6 +20,34 @@ npm install -g bee-tools
 
 `cd` 直接进入项目根目录，使用以下命令完成对应功能。
 
+### 初始化项目
+
+```
+bee-tools create 组件名称
+
+选择组件类型，应用组件选择 ac-xxx component。 基础组件选择 bee-xxx component
+
+```
+
+### 本地运行
+
+```
+修改 demo/demolist/Demo1.js 文件内容
+
+运行 npm run dev 即可
+
+新增demo请在 demo/demolist下新建文件，例如 Demo2.js、Demo3.js等
+
+```
+
+### 发布到 npm 上
+
+```
+运行 npm run pub 
+填写 changelog，会提交到git并发布
+```
+
+
 
 | # | Scripts 脚本命令 | Description 功能描述 |
 | --- | --- | --- |
