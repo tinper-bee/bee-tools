@@ -220,7 +220,7 @@ gulp.task("pack_demo", function (cb) {
             //   }
             // );
             //单独引入的组件
-            var externals = ['bee-datepicker', 'bee-timepicker', 'bee-dnd', 'bee-calendar', 'bee-carousel', 'bee-viewer']
+            var externals = ['bee-datepicker', 'bee-timepicker', 'bee-dnd', 'bee-calendar', 'bee-carousel', 'bee-viewer','bee-complex-grid']
 
             var replaceBees = []
 
