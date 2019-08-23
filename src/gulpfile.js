@@ -224,7 +224,6 @@ gulp.task("pack_demo", function (cb) {
 
             var replaceBees = []
 
-            var name = 'zzz';
             var beeAry = []; //所有 bee 组件
             //匹配当前组件名称
             var thisBee = /import +([a-zA-Z_]+) +from +["']\.\.\/([a-z0-9A-Z-\.]+\/)+([a-z0-9A-Z-\._]+)["'] ?;?/g;
