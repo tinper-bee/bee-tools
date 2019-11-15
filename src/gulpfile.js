@@ -236,6 +236,9 @@ gulp.task("pack_demo", function (cb) {
             //匹配src
             var src_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/;
 
+            //匹配src/lib
+            var src_reg_lib = /..\/..\/src\/lib/g;
+
             //匹配 from tinper-bee
             var tinperBeeReg = /import +{?([a-zA-Z_\, ]+)}? +from +["']tinper-bee["'] ?;?/;
 
@@ -300,10 +303,18 @@ gulp.task("pack_demo", function (cb) {
                 }
               });
 
+            // 去掉 ../../src  
             var srcMatch = data.match(src_reg);
             if (srcMatch) {
               data = data.replace(srcMatch[0], '')
             }
+
+            // 去掉 ../../src/lib  替换为 组件名/build/lib
+            var srcLibMatch =  data.match(src_reg_lib);
+            if(srcLibMatch){
+              data = data.replace(src_reg_lib,`${name}/build/lib`)
+            }
+
           } catch (e) {
             console.log(e);
           }

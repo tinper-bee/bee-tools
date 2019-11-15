@@ -27,6 +27,8 @@ var react_reg = /import[a-zA-Z_\, ]+{?([a-zA-Z_\, ]+)}? +from +["']react([a-zA-Z
 //匹配src
 var src_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/;
 
+var src_reg_lib = /..\/..\/src\/lib/g;
+
 //匹配 from tinper-bee
 var tinperBeeReg = /import +{?([a-zA-Z_\, ]+)}? +from +["']tinper-bee["'] ?;?/;
 
@@ -95,5 +97,15 @@ var srcMatch =  data.match(src_reg);
 if(srcMatch){
   data = data.replace(srcMatch[0],'')
 }
+
+
+
+var srcLibMatch =  data.match(src_reg_lib);
+
+if(srcLibMatch){
+  data = data.replace(src_reg_lib,`${name}/build/lib`)
+}
+
+
 console.log(data);
 
