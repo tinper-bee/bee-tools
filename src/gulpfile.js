@@ -237,7 +237,10 @@ gulp.task("pack_demo", function (cb) {
             var src_reg = /import +{?([a-zA-Z_\, ]+)}? +from +["']..\/..\/src["'] ?;?/;
 
             //匹配src/lib
-            var src_reg_lib = /..\/..\/src\/lib/g;
+            // var src_reg_lib = /..\/..\/src\/lib/g;
+
+            //匹配 src/
+            var src_reg_ = /..\/..\/src\//g;
 
             //匹配 from tinper-bee
             var tinperBeeReg = /import +{?([a-zA-Z_\, ]+)}? +from +["']tinper-bee["'] ?;?/;
@@ -309,10 +312,15 @@ gulp.task("pack_demo", function (cb) {
               data = data.replace(srcMatch[0], '')
             }
 
-            // 去掉 ../../src/lib  替换为 组件名/build/lib
-            var srcLibMatch =  data.match(src_reg_lib);
-            if(srcLibMatch){
-              data = data.replace(src_reg_lib,`${name}/build/lib`)
+            // 去掉 ../../src/lib  替换为 组件名/build/lib  例如 bee-table
+            // var srcLibMatch =  data.match(src_reg_lib);
+            // if(srcLibMatch){
+            //   data = data.replace(src_reg_lib,`${name}/build/lib`)
+            // }
+            // 去掉 ../../src/ 例如 bee-datepicker : import zhCN from "../../src/locale/zh_CN";
+            var src_reg_Match =  data.match(src_reg_);
+            if(src_reg_Match){
+              data = data.replace(src_reg_,`${name}/bulid/`)
             }
 
           } catch (e) {
