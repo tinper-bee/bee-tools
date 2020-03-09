@@ -320,7 +320,7 @@ gulp.task("pack_demo", function (cb) {
             // 去掉 ../../src/ 例如 bee-datepicker : import zhCN from "../../src/locale/zh_CN";
             var src_reg_Match =  data.match(src_reg_);
             if(src_reg_Match){
-              data = data.replace(src_reg_,`${name}/bulid/`)
+              data = data.replace(src_reg_,`${name}/build/`)
             }
 
           } catch (e) {
