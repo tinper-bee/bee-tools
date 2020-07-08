@@ -441,23 +441,20 @@ gulp.task("sass_component", function () {
 gulp.task("svgScript", function () {
   return gulp
     .src([path.join(process.cwd(), "./src/static/**/*.svg")], function (a, b) {
-      console.log("1111-", a);
-      console.log("2222-", b)
     })
     .pipe(
       svgSymbols({
         slug: name => {
-          console.log("name--", name)
+          // console.log("name--", name)
           return name;
         },
       })
     )
     .pipe(rename((path) => {
-      console.log("3333--", path)
       path.basename = 'loading';
     }), (a, b) => {
-      console.log("a-", a);
-      console.log("b-", b)
+      // console.log("a-", a);
+      // console.log("b-", b)
     })
     .pipe(gulp.dest('build/static/images/'));
   // .pipe(gulp.dest('build'));
