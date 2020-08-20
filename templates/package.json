@@ -34,7 +34,9 @@
     "coveralls": "bee-tools-test run coverage",
     "browsers": "bee-tools-test run browsers",
     "pub": "bee-tools run pub",
-    "changelog": "bee-tools run changelog"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "postversion": "git push --follow-tags"
   },
   "dependencies": {
     "classnames": "^2.2.5",
