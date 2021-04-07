@@ -185,7 +185,7 @@ gulp.task("pack_demo", function (cb) {
             //         }
             //       }
             //     }
-            //   );  
+            //   );
             // }else if(data_array && data_array.length > 0){
             //     if(name.toUpperCase().search("AC") != -1 || name.toUpperCase().search("REF") != -1){
             //       data = data.replace(
@@ -287,7 +287,7 @@ gulp.task("pack_demo", function (cb) {
               }
             }
 
-            //如果有从 tinper-bee 引入的组件 
+            //如果有从 tinper-bee 引入的组件
             var formTinper = tinperBeeReg.exec(data);
             if (formTinper) {
               beeAry.push(formTinper[1]);
@@ -306,7 +306,7 @@ gulp.task("pack_demo", function (cb) {
                 }
               });
 
-            // 去掉 ../../src  
+            // 去掉 ../../src
             var srcMatch = data.match(src_reg);
             if (srcMatch) {
               data = data.replace(srcMatch[0], '')
@@ -335,7 +335,8 @@ gulp.task("pack_demo", function (cb) {
           });
           // code.push(data);
           code.push(
-            "var " + fileName + ' = require("./demolist/' + fileName + '");'
+          	"import " + fileName + ' from "./demolist/' + fileName + '"'
+			  // "var " + fileName + ' = require("./demolist/' + fileName + '");'
           );
         } else if (file.search(/Demo\d+.scss/) !== -1) {
           var fileName = file.replace(".scss", "");
